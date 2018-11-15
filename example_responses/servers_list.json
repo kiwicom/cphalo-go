@@ -1,0 +1,44 @@
+{
+  "servers": [
+    {
+      "created_at": "2018-07-16T11:24:41.704Z",
+      "id": "d54be8ca88ea11e8800f753bfb4b1x97",
+      "url": "https://api.cloudpassage.com/v1/servers/d54be8ca88ea11e8800f753bfb4b1x97",
+      "hostname": "appium1",
+      "server_label": "appium1",
+      "reported_fqdn": "appium1",
+      "primary_ip_address": "66.3.31.21",
+      "connecting_ip_address": "66.3.31.21",
+      "state": "active",
+      "daemon_version": "4.2.2",
+      "read_only": false,
+      "platform": "ubuntu",
+      "platform_version": "16.04",
+      "os_version": "4.15.0-24-generic",
+      "kernel_name": "Linux",
+      "kernel_machine": "x86_64",
+      "self_verification_failed": false,
+      "connecting_ip_fqdn": "static.66.3.31.21.clients.your-server.de",
+      "last_state_change": "2018-08-07T14:45:49.947Z",
+      "docker_inspection": "Disabled",
+      "group_id": "de218efef44f11e6bb816d29f4f59c91",
+      "group_name": "appservers",
+      "group_path": "example.com/appservers",
+      "interfaces": [
+        {
+          "name": "docker0",
+          "ip_address": "172.17.0.1",
+          "netmask": "255.255.0.0",
+          "mac_address": null
+        },
+        {
+          "name": "eth0",
+          "ip_address": "66.3.31.21",
+          "netmask": "255.255.255.192",
+          "mac_address": null
+        }
+      ]
+    }
+  ],
+  "count": 1
+}

@@ -1,0 +1,69 @@
+package api
+
+import (
+	"fmt"
+	"net/http"
+	"net/url"
+	"time"
+)
+
+const (
+	DefaultTimeout      = 10 * time.Second
+	DefaultMaxAuthTries = 3
+	DefaultBaseUrl      = "https://api.cloudpassage.com"
+	DefaultApiVersion   = "v1"
+)
+
+type Client struct {
+	AppKey       string
+	AppSecret    string
+	AccessToken  string
+	BaseUrl      *url.URL
+	Timeout      time.Duration
+	MaxAuthTries int
+
+	client *http.Client
+}
+
+func NewClient(appKey string, appSecret string) *Client {
+	baseUrl, _ := url.Parse(DefaultBaseUrl)
+	c := &Client{
+		AppKey:       appKey,
+		AppSecret:    appSecret,
+		BaseUrl:      baseUrl,
+		Timeout:      DefaultTimeout,
+		MaxAuthTries: DefaultMaxAuthTries,
+	}
+	c.client = &http.Client{Timeout: c.Timeout}
+
+	return c
+}
+
+func (c *Client) Validate() (bool, error) {
+	return true, nil
+}
+
+func (c *Client) NewRequest(method string, rsc string, params map[string]string) (*http.Request, error) {
+	rawURL := c.BaseUrl.String() + "/" + DefaultApiVersion + "/" + rsc
+	baseUrl, err := url.Parse(rawURL)
+
+	if err != nil {
+		return nil, fmt.Errorf("cannot parse url %s: %v", rawURL, err)
+	}
+
+	if params != nil {
+		ps := url.Values{}
+		for k, v := range params {
+			ps.Set(k, v)
+		}
+		baseUrl.RawQuery = ps.Encode()
+	}
+
+	req, err := http.NewRequest(method, baseUrl.String(), nil)
+
+	if err != nil {
+		return nil, fmt.Errorf("cannot create request: %v", err)
+	}
+
+	return req, nil
+}

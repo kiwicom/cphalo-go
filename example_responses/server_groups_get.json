@@ -1,0 +1,44 @@
+{
+  "group": {
+    "id": "0962bfa087bc01323e360670140ec224",
+    "url": "https://api.cloudpassage.com/v1/groups/0962bfa087bc01323e360670140ec224",
+    "name": "qa-functional",
+    "description": null,
+    "tag": "",
+    "firewall_policy_id": "8eb1b050abe2013295e406ba9a9c633c",
+    "linux_firewall_policy_id": "8eb1b050abe2013295e406ba9a9c633c",
+    "windows_firewall_policy_id": "291f1420abe7013295e406ba9a9c633c",
+    "server_counts": {
+      "active": 9,
+      "missing": 0,
+      "deactivated": 146,
+      "retired": 10,
+      "total": 165
+    },
+    "policy_ids": [
+      "7e1210aa8e5311e5a17769a1b748c836",
+      "38c89b381f6611e59cb40db4c6c0bae5"
+    ],
+    "windows_policy_ids": [
+      "d7c20c76609111e5863e116ca1d550c2",
+      "9683b6a0af01013295f406ba9a9c633c"
+    ],
+    "cve_exception_ids": [],
+    "fim_policy_ids": [
+      "ab50af103f8211e5a1e7193241212e97",
+      "9a14e404ae0011e5ac3b6f9396d4f39a"
+    ],
+    "windows_fim_policy_ids": [
+      "0aea4620b3b60132962206ba9a9c633c"
+    ],
+    "alert_profile_ids": [],
+    "server_events_policy_id": "0972b4f087bc01323e360670140ec224",
+    "lids_policy_ids": [
+      "f3541070d5820132c0df06bf4fdcb353"
+    ],
+    "km_policy_ids": [],
+    "parent_id": null,
+    "has_children": true,
+    "children_groups_url": "https://api.cloudpassage.com/v1/groups?parent_id=0962bfa087bc01323e360670140ec224"
+  }
+}

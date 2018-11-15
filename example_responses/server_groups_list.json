@@ -1,0 +1,59 @@
+{
+  "count": 2,
+  "groups": [
+    {
+      "id": "9981f162c2d611e680b17f1fb185c564",
+      "url": "https://api.cloudpassage.com/v1/groups/9981f162c2d611e680b17f1fb185c564",
+      "name": "graphite",
+      "description": null,
+      "tag": "graphite",
+      "firewall_policy_id": null,
+      "linux_firewall_policy_id": null,
+      "windows_firewall_policy_id": null,
+      "server_counts": {
+        "active": 0,
+        "missing": 0,
+        "deactivated": 0,
+        "total": 0
+      },
+      "group_path": "kiwi.com/graphite",
+      "policy_ids": [],
+      "windows_policy_ids": [],
+      "cve_exception_ids": [],
+      "fim_policy_ids": [],
+      "windows_fim_policy_ids": [],
+      "alert_profile_ids": [],
+      "server_events_policy_id": "eb76c7d28a2711e69f5839cee5c1f25b",
+      "lids_policy_ids": [],
+      "parent_id": "eb3f8a248a2711e69f5839cee5c1f25b",
+      "has_children": false
+    },
+    {
+      "id": "99edf4b6c2d611e6aa9177ed6158edb9",
+      "url": "https://api.cloudpassage.com/v1/groups/99edf4b6c2d611e6aa9177ed6158edb9",
+      "name": "engine_crons",
+      "description": null,
+      "tag": "engine_crons",
+      "firewall_policy_id": null,
+      "linux_firewall_policy_id": null,
+      "windows_firewall_policy_id": null,
+      "server_counts": {
+        "active": 0,
+        "missing": 0,
+        "deactivated": 0,
+        "total": 0
+      },
+      "group_path": "kiwi.com/engine_crons",
+      "policy_ids": [],
+      "windows_policy_ids": [],
+      "cve_exception_ids": [],
+      "fim_policy_ids": [],
+      "windows_fim_policy_ids": [],
+      "alert_profile_ids": [],
+      "server_events_policy_id": "eb76c7d28a2711e69f5839cee5c1f25b",
+      "lids_policy_ids": [],
+      "parent_id": "eb3f8a248a2711e69f5839cee5c1f25b",
+      "has_children": false
+    }
+  ]
+}

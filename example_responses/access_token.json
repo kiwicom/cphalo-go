@@ -1,0 +1,5 @@
+{
+  "access_token": "some_token_for_cp_halo_rest_api1",
+  "token_type": "bearer",
+  "expires_in": 900
+}
