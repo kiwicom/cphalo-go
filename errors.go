@@ -27,14 +27,22 @@ func (e ResponseError404) Error() string {
 
 type ResponseError422 struct {
 	Message string `json:"message"`
-	Errors  struct {
-		Code  string `json:"code"`
-		Field string `json:"field"`
+	Errors  []struct {
+		Field   string `json:"field"`
+		Value   string `json:"value"`
+		Code    string `json:"code"`
+		Details string `json:"details"`
 	} `json:"errors"`
 }
 
 func (e ResponseError422) Error() string {
-	return fmt.Sprintf("validation failed for %s and code %s: %s", e.Errors.Field, e.Errors.Code, e.Message)
+	msg := fmt.Sprintf("validation failed for %d fields with msg: %s", len(e.Errors), e.Message)
+
+	for _, e := range e.Errors {
+		msg = msg + fmt.Sprintf("\n- %s %s", e.Field, e.Code)
+	}
+
+	return msg
 }
 
 type ResponseError500 struct {

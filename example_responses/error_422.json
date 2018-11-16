@@ -1,7 +1,17 @@
 {
   "message": "Validation Failed",
-  "errors": {
-    "code": "taken",
-    "field": "name"
-  }
+  "errors": [
+    {
+      "field": "name",
+      "value": "",
+      "code": "required",
+      "details": "Name required"
+    },
+    {
+      "field": "name",
+      "value": "",
+      "code": "must not be less than 1 characters long.",
+      "details": "Name must not be less than 1 characters long."
+    }
+  ]
 }
