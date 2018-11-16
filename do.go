@@ -50,6 +50,11 @@ func (c *Client) doTries(req *http.Request, v interface{}, tries int) (*http.Res
 		return nil, fmt.Errorf("response validation failed: %v", err)
 	}
 
+	// no need to unmarshal body
+	if v == nil {
+		return resp, nil
+	}
+
 	err = parseResponse(resp, v)
 
 	if err != nil {
@@ -86,21 +91,36 @@ func validateResponse(r *http.Response) error {
 		return nil
 	}
 
-	log.Println("processing error response")
+	log.Println("processing error response, error code: ", r.StatusCode)
 	bodyBytes, err := ioutil.ReadAll(r.Body)
 
 	if err != nil {
 		return fmt.Errorf("cannot read error body: %v", err)
 	}
 
+	if len(bodyBytes) == 0 {
+		return fmt.Errorf("response failed with code %d without any extra information", r.StatusCode)
+	}
+
 	bodyString := string(bodyBytes)
-	log.Println(bodyString)
+	log.Println("response body: ", bodyString)
 
-	m := &ResponseError{}
+	var customErr error
 
-	if err := json.Unmarshal([]byte(bodyString), &m); err != nil {
+	switch r.StatusCode {
+	case 404:
+		customErr = &ResponseError404{}
+	case 500:
+		customErr = &ResponseError500{}
+	case 422:
+		customErr = &ResponseError422{}
+	default:
+		customErr = &ResponseErrorGeneral{}
+	}
+
+	if err := json.Unmarshal(bodyBytes, &customErr); err != nil {
 		return fmt.Errorf("cannot unmarshall error response: %v", err)
 	}
 
-	return fmt.Errorf("error response: %s", m.Error)
+	return customErr
 }

@@ -1,7 +1,10 @@
 package api
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 	"time"
@@ -43,7 +46,7 @@ func (c *Client) Validate() (bool, error) {
 	return true, nil
 }
 
-func (c *Client) NewRequest(method string, rsc string, params map[string]string) (*http.Request, error) {
+func (c *Client) NewRequest(method string, rsc string, params map[string]string, body interface{}) (*http.Request, error) {
 	rawURL := c.BaseUrl.String() + "/" + DefaultApiVersion + "/" + rsc
 	baseUrl, err := url.Parse(rawURL)
 
@@ -59,7 +62,19 @@ func (c *Client) NewRequest(method string, rsc string, params map[string]string)
 		baseUrl.RawQuery = ps.Encode()
 	}
 
-	req, err := http.NewRequest(method, baseUrl.String(), nil)
+	var requestBody []byte
+	if body != nil {
+		requestBody, err = json.Marshal(body)
+
+		if err != nil {
+			return nil, fmt.Errorf("cannot marshall request body: %v", err)
+		}
+
+		log.Println("request body: ", string(requestBody))
+	}
+
+	req, err := http.NewRequest(method, baseUrl.String(), bytes.NewBuffer(requestBody))
+	req.Header.Add("Content-Type", "application/json")
 
 	if err != nil {
 		return nil, fmt.Errorf("cannot create request: %v", err)

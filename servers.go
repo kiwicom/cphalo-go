@@ -42,7 +42,7 @@ type GetServersResponse struct {
 }
 
 func (c *Client) ListServers() (response ListServersResponse, err error) {
-	req, err := c.NewRequest(http.MethodGet, "servers", nil)
+	req, err := c.NewRequest(http.MethodGet, "servers", nil, nil)
 	if err != nil {
 		return response, fmt.Errorf("cannot create new request: %v", err)
 	}

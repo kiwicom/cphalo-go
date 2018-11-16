@@ -1,4 +1,7 @@
 {
-  "code": 500,
-  "message": "Internal Server Error"
+  "message": "Validation Failed",
+  "errors": {
+    "code": "taken",
+    "field": "name"
+  }
 }
