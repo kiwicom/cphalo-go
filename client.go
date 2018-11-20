@@ -42,10 +42,6 @@ func NewClient(appKey string, appSecret string) *Client {
 	return c
 }
 
-func (c *Client) Validate() (bool, error) {
-	return true, nil
-}
-
 func (c *Client) NewRequest(method string, rsc string, params map[string]string, body interface{}) (*http.Request, error) {
 	rawURL := c.BaseUrl.String() + "/" + DefaultApiVersion + "/" + rsc
 	baseUrl, err := url.Parse(rawURL)
