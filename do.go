@@ -13,7 +13,7 @@ func (c *Client) Do(req *http.Request, v interface{}) (*http.Response, error) {
 }
 
 func (c *Client) doTries(req *http.Request, v interface{}, tries int) (*http.Response, error) {
-	log.Println("making request to: " + req.URL.String())
+	log.Printf("making %s request to: %s", req.Method, req.URL.String())
 	if tries >= c.MaxAuthTries {
 		return nil, fmt.Errorf("max tries exceeded")
 	}
