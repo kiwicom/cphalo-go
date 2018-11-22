@@ -49,7 +49,7 @@ func (c *Client) GetServerGroup(ID string) (response GetServerGroupResponse, err
 
 	_, err = c.Do(req, &response)
 	if err != nil {
-		return response, fmt.Errorf("cannot execute request: %v", err)
+		return response, err
 	}
 
 	return response, nil

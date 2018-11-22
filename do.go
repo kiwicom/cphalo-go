@@ -47,7 +47,7 @@ func (c *Client) doTries(req *http.Request, v interface{}, tries int) (*http.Res
 	}
 
 	if err := validateResponse(resp); err != nil {
-		return nil, fmt.Errorf("response validation failed: %v", err)
+		return nil, err
 	}
 
 	// no need to unmarshal body
