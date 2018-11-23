@@ -1,6 +1,7 @@
 package api
 
 import (
+	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"testing"
@@ -11,7 +12,15 @@ func TestClient_ListServerGroups(t *testing.T) {
 	expectedResults := 2
 	expectedID := "9981f162c2d611e680b17f1fb185c564"
 
-	ts := httptest.NewServer(jsonResponseTestHandler("server_groups_list", t, true))
+	ts := httptest.NewServer(
+		requestValidatorTestHandler(
+			jsonResponseTestHandler(t, "server_groups_list", http.StatusOK),
+			t,
+			http.MethodGet,
+			"/v1/groups",
+			nil,
+		),
+	)
 	defer ts.Close()
 
 	client := NewClient("", "")
@@ -44,7 +53,15 @@ func TestClient_GetServerGroup(t *testing.T) {
 	var err error
 	expectedID := "0962bfa087bc01323e360670140ec224"
 
-	ts := httptest.NewServer(jsonResponseTestHandler("server_groups_get", t, true))
+	ts := httptest.NewServer(
+		requestValidatorTestHandler(
+			jsonResponseTestHandler(t, "server_groups_get", http.StatusOK),
+			t,
+			http.MethodGet,
+			"/v1/groups/id",
+			nil,
+		),
+	)
 	defer ts.Close()
 
 	client := NewClient("", "")

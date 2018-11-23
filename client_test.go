@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -63,9 +64,15 @@ func authTestHandler(next http.Handler, t *testing.T) http.Handler {
 	return http.HandlerFunc(fn)
 }
 
-func jsonResponseTestHandler(name string, t *testing.T, auth bool) http.Handler {
+func jsonResponseTestHandler(t *testing.T, responseFile string, code int) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
-		b, err := ioutil.ReadFile(fmt.Sprintf("example_responses/%s.json", name))
+		w.WriteHeader(code)
+
+		if responseFile == "" {
+			return
+		}
+
+		b, err := ioutil.ReadFile(fmt.Sprintf("example_responses/%s.json", responseFile))
 
 		if err != nil {
 			t.Fatalf("cannot read file: %v", err)
@@ -74,21 +81,38 @@ func jsonResponseTestHandler(name string, t *testing.T, auth bool) http.Handler 
 		fmt.Fprint(w, string(b))
 	}
 
-	if auth {
-		return authTestHandler(http.HandlerFunc(fn), t)
-	}
-
 	return http.HandlerFunc(fn)
 }
 
-func assertRequest(r *http.Request, t *testing.T, expectedMethod, expectedURI string) {
-	if t == nil {
-		t.Fatal("request not set for assertion")
+func requestValidatorTestHandler(next http.Handler, t *testing.T, expectedMethod, expectedURI string, body interface{}) http.Handler {
+	fn := func(w http.ResponseWriter, r *http.Request) {
+		if t == nil {
+			t.Fatal("request not set for assertion")
+		}
+		if r.Method != expectedMethod {
+			t.Errorf("invalid method, expected %s; got %s", expectedMethod, r.Method)
+		}
+		if r.RequestURI != expectedURI {
+			t.Errorf("invalid URI, expected %s; got %s", expectedURI, r.RequestURI)
+		}
+
+		if body != nil {
+			b, err := ioutil.ReadAll(r.Body)
+
+			if err != nil {
+				t.Fatalf("reading body failed: %v", err)
+			}
+
+			if err := json.Unmarshal(b, body); err != nil {
+				t.Fatalf("unmarshalling body failed: %v", err)
+			}
+		}
+
+		if next != nil {
+			next.ServeHTTP(w, r)
+		}
+
 	}
-	if r.Method != expectedMethod {
-		t.Errorf("invalid method, expected %s; got %s", expectedMethod, r.Method)
-	}
-	if r.RequestURI != expectedURI {
-		t.Errorf("invalid URI, expected %s; got %s", expectedURI, r.RequestURI)
-	}
+
+	return authTestHandler(http.HandlerFunc(fn), t)
 }

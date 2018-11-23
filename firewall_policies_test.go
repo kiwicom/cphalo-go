@@ -1,6 +1,7 @@
 package api
 
 import (
+	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"testing"
@@ -11,7 +12,15 @@ func TestClient_ListFirewallPolicies(t *testing.T) {
 	expectedResults := 3
 	expectedID := "8cb238a0ee5511e18s9a4d1cedf20253"
 
-	ts := httptest.NewServer(jsonResponseTestHandler("firewall_policies_list", t, true))
+	ts := httptest.NewServer(
+		requestValidatorTestHandler(
+			jsonResponseTestHandler(t, "firewall_policies_list", http.StatusOK),
+			t,
+			http.MethodGet,
+			"/v1/firewall_policies",
+			nil,
+		),
+	)
 	defer ts.Close()
 
 	client := NewClient("", "")
@@ -44,7 +53,15 @@ func TestClient_GetFirewallPolicy(t *testing.T) {
 	var err error
 	expectedID := "be28b106ee5b11e8a7s1017da54e9117"
 
-	ts := httptest.NewServer(jsonResponseTestHandler("firewall_policies_get", t, true))
+	ts := httptest.NewServer(
+		requestValidatorTestHandler(
+			jsonResponseTestHandler(t, "firewall_policies_get", http.StatusOK),
+			t,
+			http.MethodGet,
+			"/v1/firewall_policies/id",
+			nil,
+		),
+	)
 	defer ts.Close()
 
 	client := NewClient("", "")

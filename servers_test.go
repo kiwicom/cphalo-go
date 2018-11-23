@@ -1,8 +1,6 @@
 package api
 
 import (
-	"encoding/json"
-	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -14,7 +12,15 @@ func TestClient_ListServers(t *testing.T) {
 	expectedResults := 1
 	expectedID := "d54be8ca88ea11e8800f753bfb4b1x97"
 
-	ts := httptest.NewServer(jsonResponseTestHandler("servers_list", t, true))
+	ts := httptest.NewServer(
+		requestValidatorTestHandler(
+			jsonResponseTestHandler(t, "servers_list", http.StatusOK),
+			t,
+			http.MethodGet,
+			"/v1/servers",
+			nil,
+		),
+	)
 	defer ts.Close()
 
 	client := NewClient("", "")
@@ -47,7 +53,15 @@ func TestClient_GetServer(t *testing.T) {
 	var err error
 	expectedID := "3958fe0c08e511e7819335b35e8ba368"
 
-	ts := httptest.NewServer(jsonResponseTestHandler("server_get", t, true))
+	ts := httptest.NewServer(
+		requestValidatorTestHandler(
+			jsonResponseTestHandler(t, "server_get", http.StatusOK),
+			t,
+			http.MethodGet,
+			"/v1/servers/id",
+			nil,
+		),
+	)
 	defer ts.Close()
 
 	client := NewClient("", "")
@@ -76,10 +90,15 @@ func TestClient_GetServer(t *testing.T) {
 func TestClient_DeleteServer(t *testing.T) {
 	var err error
 
-	ts := httptest.NewServer(authTestHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		assertRequest(r, t, http.MethodDelete, "/v1/servers/test")
-		w.WriteHeader(http.StatusNoContent)
-	}), t))
+	ts := httptest.NewServer(
+		requestValidatorTestHandler(
+			jsonResponseTestHandler(t, "", http.StatusNoContent),
+			t,
+			http.MethodDelete,
+			"/v1/servers/test",
+			nil,
+		),
+	)
 	defer ts.Close()
 
 	client := NewClient("", "")
@@ -99,26 +118,17 @@ func TestClient_DeleteServer(t *testing.T) {
 func TestClient_RetireServer(t *testing.T) {
 	var err error
 
-	ts := httptest.NewServer(authTestHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		assertRequest(r, t, http.MethodPut, "/v1/servers/test")
+	body := RetireServerRequest{}
 
-		b, err := ioutil.ReadAll(r.Body)
-
-		if err != nil {
-			t.Fatalf("reading body failed: %v", err)
-		}
-
-		reqData := RetireServerRequest{}
-		if err := json.Unmarshal(b, &reqData); err != nil {
-			t.Fatalf("unmarshalling body failed: %v", err)
-		}
-
-		if !reqData.Server.Retire {
-			t.Error("retirement should be set to true")
-		}
-
-		w.WriteHeader(http.StatusNoContent)
-	}), t))
+	ts := httptest.NewServer(
+		requestValidatorTestHandler(
+			jsonResponseTestHandler(t, "", http.StatusNoContent),
+			t,
+			http.MethodPut,
+			"/v1/servers/test",
+			&body,
+		),
+	)
 	defer ts.Close()
 
 	client := NewClient("", "")
@@ -133,32 +143,28 @@ func TestClient_RetireServer(t *testing.T) {
 	if err != nil {
 		t.Fatalf("server retirement failed: %v", err)
 	}
+
+	if !body.Server.Retire {
+		t.Error("retirement should be set to true")
+	}
 }
 
 func TestClient_MoveServer(t *testing.T) {
 	var err error
 
 	testGroupID := "group_id"
-	ts := httptest.NewServer(authTestHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		assertRequest(r, t, http.MethodPut, "/v1/servers/test")
 
-		b, err := ioutil.ReadAll(r.Body)
+	body := MoveServerRequest{}
 
-		if err != nil {
-			t.Fatalf("reading body failed: %v", err)
-		}
-
-		reqData := MoveServerRequest{}
-		if err := json.Unmarshal(b, &reqData); err != nil {
-			t.Fatalf("unmarshalling body failed: %v", err)
-		}
-
-		if reqData.Server.GroupID != testGroupID {
-			t.Errorf("expected group id %s; got %s", testGroupID, reqData.Server.GroupID)
-		}
-
-		w.WriteHeader(http.StatusNoContent)
-	}), t))
+	ts := httptest.NewServer(
+		requestValidatorTestHandler(
+			jsonResponseTestHandler(t, "", http.StatusNoContent),
+			t,
+			http.MethodPut,
+			"/v1/servers/test",
+			&body,
+		),
+	)
 	defer ts.Close()
 
 	client := NewClient("", "")
@@ -172,5 +178,9 @@ func TestClient_MoveServer(t *testing.T) {
 
 	if err != nil {
 		t.Fatalf("server movement failed: %v", err)
+	}
+
+	if body.Server.GroupID != testGroupID {
+		t.Errorf("expected group id %s; got %s", testGroupID, body.Server.GroupID)
 	}
 }
