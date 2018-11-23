@@ -1,6 +1,9 @@
 package api
 
 import (
+	"io/ioutil"
+	"net/http"
+	"strings"
 	"testing"
 )
 
@@ -34,4 +37,27 @@ func TestNewClient(t *testing.T) {
 	if client.client.Timeout != DefaultTimeout {
 		t.Errorf("expected client timeout %s; got %s", DefaultTimeout, client.client.Timeout)
 	}
+}
+
+func authTestHandler(next http.Handler, t *testing.T) http.Handler {
+	fn := func(w http.ResponseWriter, r *http.Request) {
+		if strings.HasPrefix(r.RequestURI, "/oauth") {
+			b, err := ioutil.ReadFile("example_responses/access_token.json")
+
+			if err != nil {
+				t.Fatalf("cannot read file: %v", err)
+			}
+
+			w.WriteHeader(http.StatusOK)
+			_, err = w.Write(b)
+
+			if err != nil {
+				t.Fatalf("cannot write response: %v", err)
+			}
+			return
+		}
+		next.ServeHTTP(w, r)
+	}
+
+	return http.HandlerFunc(fn)
 }
