@@ -134,3 +134,43 @@ func TestClient_RetireServer(t *testing.T) {
 		t.Fatalf("server retirement failed: %v", err)
 	}
 }
+
+func TestClient_MoveServer(t *testing.T) {
+	var err error
+
+	testGroupID := "group_id"
+	ts := httptest.NewServer(authTestHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assertRequest(r, t, http.MethodPut, "/v1/servers/test")
+
+		b, err := ioutil.ReadAll(r.Body)
+
+		if err != nil {
+			t.Fatalf("reading body failed: %v", err)
+		}
+
+		reqData := MoveServerRequest{}
+		if err := json.Unmarshal(b, &reqData); err != nil {
+			t.Fatalf("unmarshalling body failed: %v", err)
+		}
+
+		if reqData.Server.GroupID != testGroupID {
+			t.Errorf("expected group id %s; got %s", testGroupID, reqData.Server.GroupID)
+		}
+
+		w.WriteHeader(http.StatusNoContent)
+	}), t))
+	defer ts.Close()
+
+	client := NewClient("", "")
+	client.BaseUrl, err = url.Parse(ts.URL)
+
+	if err != nil {
+		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
+	}
+
+	err = client.MoveServer("test", testGroupID)
+
+	if err != nil {
+		t.Fatalf("server movement failed: %v", err)
+	}
+}

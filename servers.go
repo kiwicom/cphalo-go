@@ -47,6 +47,12 @@ type RetireServerRequest struct {
 	} `json:"server"`
 }
 
+type MoveServerRequest struct {
+	Server struct {
+		GroupID string `json:"group_id"`
+	} `json:"server"`
+}
+
 func (c *Client) ListServers() (response ListServersResponse, err error) {
 	req, err := c.NewRequest(http.MethodGet, "servers", nil, nil)
 	if err != nil {
@@ -73,6 +79,23 @@ func (c *Client) GetServer(ID string) (response GetServersResponse, err error) {
 	}
 
 	return response, nil
+}
+
+func (c *Client) MoveServer(ID, gID string) error {
+	reqData := MoveServerRequest{}
+	reqData.Server.GroupID = gID
+
+	req, err := c.NewRequest(http.MethodPut, "servers/"+ID, nil, reqData)
+	if err != nil {
+		return fmt.Errorf("cannot create new move request: %v", err)
+	}
+
+	_, err = c.Do(req, nil)
+	if err != nil {
+		return fmt.Errorf("cannot execute move request: %v", err)
+	}
+
+	return nil
 }
 
 func (c *Client) DeleteServer(ID string) error {
