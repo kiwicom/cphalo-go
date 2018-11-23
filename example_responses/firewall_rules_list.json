@@ -1,0 +1,27 @@
+{
+  "count": 2,
+  "firewall_rules": [
+    {
+      "id": "ce3d810cee5b23ju9d0d15ea2eff2521",
+      "url": "https://api.cloudpassage.com/v1/firewall_policies/be28b106ee5b118ju6f1017da54e9117/firewall_rules/ce3d810cee5b23ju9d0d15ea2eff2521",
+      "chain": "INPUT",
+      "action": "ACCEPT",
+      "active": true,
+      "connection_states": null,
+      "log": false,
+      "log_prefix": "",
+      "comment": ""
+    },
+    {
+      "id": "ce4a8a00e8akoe89d0d15ea2eff2521",
+      "url": "https://api.cloudpassage.com/v1/firewall_policies/be28b106ee5b118ju6f1017da54e9117/firewall_rules/ce4a8a00e8akoe89d0d15ea2eff2521",
+      "chain": "OUTPUT",
+      "action": "ACCEPT",
+      "active": true,
+      "connection_states": null,
+      "log": false,
+      "log_prefix": "",
+      "comment": ""
+    }
+  ]
+}

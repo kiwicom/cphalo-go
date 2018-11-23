@@ -1,0 +1,14 @@
+{
+  "firewall_rule": {
+    "id": "jtap810cee5b11e89d0d15ea2eff2521",
+    "url": "https://api.cloudpassage.com/v1/firewall_policies/be28b106ee5b11e8b79ao07da54e9117/firewall_rules/jtap810cee5b11e89d0d15ea2eff2521",
+    "chain": "INPUT",
+    "action": "ACCEPT",
+    "active": true,
+    "connection_states": null,
+    "log": false,
+    "log_prefix": "",
+    "comment": "",
+    "position": 1
+  }
+}

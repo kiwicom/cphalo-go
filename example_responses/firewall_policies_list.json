@@ -1,0 +1,67 @@
+{
+  "count": 3,
+  "firewall_policies": [
+    {
+      "id": "8cb238a0ee5511e18s9a4d1cedf20253",
+      "url": "https://api.cloudpassage.com/v1/firewall_policies/8cb238a0ee5511e18s9a4d1cedf20253",
+      "name": "test policy",
+      "module": "fw",
+      "created_by": "api_client",
+      "updated_by": "api_client",
+      "created_at": "2018-11-22T12:53:03.491Z",
+      "updated_at": "2018-11-22T12:53:09.221Z",
+      "group_id": "fff04606e97asd9896d9252f8ed31fc8",
+      "group_name": "example.com",
+      "description": "",
+      "platform": "linux",
+      "shared": false,
+      "read_only": false,
+      "used_by": [
+        {
+          "id": "fff04606eas9d1e896d9252f8ed31fc8",
+          "name": "example.com"
+        }
+      ],
+      "target_type": "server",
+      "ignore_forwarding_rules": false
+    },
+    {
+      "id": "1efa203cee5ckka8906e5fe9c3ed9996",
+      "url": "https://api.cloudpassage.com/v1/firewall_policies/1efa203cee5ckka8906e5fe9c3ed9996",
+      "name": "subpolicy",
+      "module": "fw",
+      "created_by": "api_client",
+      "updated_by": "api_client",
+      "created_at": "2018-11-22T13:40:05.890Z",
+      "updated_at": "2018-11-22T13:40:11.767Z",
+      "group_id": "fff04606e97asd9896d9252f8ed31fc8",
+      "group_name": "example.com",
+      "description": "",
+      "platform": "linux",
+      "shared": false,
+      "read_only": false,
+      "used_by": [],
+      "target_type": "server",
+      "ignore_forwarding_rules": false
+    },
+    {
+      "id": "be28b106ee5b11eas761017da54e9117",
+      "url": "https://api.cloudpassage.com/v1/firewall_policies/be28b106ee5b11eas761017da54e9117",
+      "name": "thebestfirewall",
+      "module": "fw",
+      "created_by": "api_client",
+      "updated_by": "api_client",
+      "created_at": "2018-11-22T13:37:23.457Z",
+      "updated_at": "2018-11-22T13:42:59.057Z",
+      "group_id": "fff04606e97asd9896d9252f8ed31fc8",
+      "group_name": "example.com",
+      "description": "",
+      "platform": "linux",
+      "shared": true,
+      "read_only": false,
+      "used_by": [],
+      "target_type": "server",
+      "ignore_forwarding_rules": false
+    }
+  ]
+}
