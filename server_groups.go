@@ -6,12 +6,13 @@ import (
 )
 
 type ServerGroup struct {
-	ID          string `json:"id,omitempty"`
-	URL         string `json:"url,omitempty"`
-	Name        string `json:"name,omitempty"`
-	ParentID    string `json:"parent_id,omitempty"`
-	HasChildren bool   `json:"has_children,omitempty"`
-	Tag         string `json:"tag,omitempty"`
+	ID                    string         `json:"id,omitempty"`
+	URL                   string         `json:"url,omitempty"`
+	Name                  string         `json:"name,omitempty"`
+	ParentID              string         `json:"parent_id,omitempty"`
+	HasChildren           bool           `json:"has_children,omitempty"`
+	Tag                   string         `json:"tag,omitempty"`
+	LinuxFirewallPolicyID NullableString `json:"linux_firewall_policy_id"`
 }
 
 type ListServerGroupsResponse struct {
@@ -70,7 +71,10 @@ func (c *Client) CreateServerGroup(group ServerGroup) (response CreateServerGrou
 }
 
 func (c *Client) UpdateServerGroup(group ServerGroup) error {
-	req, err := c.NewRequest(http.MethodPut, "groups/"+group.ID, nil, UpdateServerGroupRequest{Group: group})
+	gID := group.ID
+	group.ID = ""
+
+	req, err := c.NewRequest(http.MethodPut, "groups/"+gID, nil, UpdateServerGroupRequest{Group: group})
 	if err != nil {
 		return fmt.Errorf("cannot create new update request: %v", err)
 	}
