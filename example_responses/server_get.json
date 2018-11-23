@@ -1,0 +1,61 @@
+{
+  "server": {
+    "created_at": "2017-03-14T18:37:06.075Z",
+    "id": "3958fe0c08e511e7819335b35e8ba368",
+    "url": "https://portal.cloudpassage.com/v1/servers/3958fe0c08e511e7819335b35e8ba368",
+    "hostname": "EC2AMAZ-UDGHEFG",
+    "server_label": "PM-Prod-Win2016-Server1",
+    "reported_fqdn": "EC2AMAZ-UDGHEFG",
+    "primary_ip_address": "172.31.56.84",
+    "connecting_ip_address": "54.144.62.250",
+    "state": "active",
+    "daemon_version": "4.2.2",
+    "read_only": false,
+    "platform": "windows",
+    "platform_version": "10.0.14393",
+    "os_version": "10.0.14393",
+    "kernel_name": "Microsoft Windows Server 2016 Datacenter",
+    "kernel_machine": "64-bit",
+    "self_verification_failed": false,
+    "connecting_ip_fqdn": "ec2-54-144-62-250.compute-1.amazonaws.com",
+    "last_state_change": "2018-04-04T01:00:17.171Z",
+    "docker_inspection": "Disabled",
+    "group_id": "b864e2204f72012f94c9404038a8a7aa",
+    "group_name": "Acme Co",
+    "group_path": "Acme Co",
+    "firewall_policy": null,
+    "interfaces": [
+      {
+        "name": "{B3AF8C8A-EFEB-48D3-A2BA-94256F8C075C}",
+        "ip_address": "172.31.56.84",
+        "netmask": "255.255.240.0",
+        "mac_address": null,
+        "display_name": "Ethernet 2"
+      }
+    ],
+    "aws_ec2": {
+      "ec2_instance_id": "i-02d3196d963de03ab",
+      "ec2_account_id": "550529930677",
+      "ec2_kernel_id": null,
+      "ec2_image_id": "ami-fc97a7eb",
+      "ec2_availability_zone": "us-east-1b",
+      "ec2_region": "us-east-1",
+      "ec2_private_ip": "172.31.56.84",
+      "ec2_instance_type": "t2.micro",
+      "ec2_security_groups": [
+        "Group A"
+      ]
+    },
+    "csp_provider": "aws_ec2",
+    "csp_account_id": "550529930677",
+    "csp_availability_zone": "us-east-1b",
+    "csp_image_id": "ami-fc97a7eb",
+    "csp_instance_id": "i-02d3196d963de03ab",
+    "csp_instance_type": "t2.micro",
+    "csp_kernel_id": null,
+    "csp_private_ip": "172.31.56.84",
+    "csp_region": "us-east-1",
+    "csp_security_groups": null,
+    "csp_instance_tags": null
+  }
+}

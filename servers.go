@@ -55,7 +55,17 @@ func (c *Client) ListServers() (response ListServersResponse, err error) {
 	return response, nil
 }
 
-func (c *Client) GetServer() (response GetServersResponse, err error) {
+func (c *Client) GetServer(ID string) (response GetServersResponse, err error) {
+	req, err := c.NewRequest(http.MethodGet, "servers/"+ID, nil, nil)
+	if err != nil {
+		return response, fmt.Errorf("cannot create new request: %v", err)
+	}
+
+	_, err = c.Do(req, &response)
+	if err != nil {
+		return response, err
+	}
+
 	return response, nil
 }
 
