@@ -1,8 +1,6 @@
 package api
 
 import (
-	"fmt"
-	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -14,15 +12,7 @@ func TestClient_ListServers(t *testing.T) {
 	expectedResults := 1
 	expectedID := "d54be8ca88ea11e8800f753bfb4b1x97"
 
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		b, err := ioutil.ReadFile("example_responses/servers_list.json")
-
-		if err != nil {
-			t.Fatalf("cannot read file: %v", err)
-		}
-
-		fmt.Fprint(w, string(b))
-	}))
+	ts := httptest.NewServer(jsonResponseTestHandler("servers_list", t, true))
 	defer ts.Close()
 
 	client := NewClient("", "")
@@ -55,15 +45,7 @@ func TestClient_GetServer(t *testing.T) {
 	var err error
 	expectedID := "3958fe0c08e511e7819335b35e8ba368"
 
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		b, err := ioutil.ReadFile("example_responses/server_get.json")
-
-		if err != nil {
-			t.Fatalf("cannot read file: %v", err)
-		}
-
-		fmt.Fprint(w, string(b))
-	}))
+	ts := httptest.NewServer(jsonResponseTestHandler("server_get", t, true))
 	defer ts.Close()
 
 	client := NewClient("", "")
@@ -86,5 +68,27 @@ func TestClient_GetServer(t *testing.T) {
 	expectedSGID := "b864e2204f72012f94c9404038a8a7aa"
 	if resp.Server.GroupID != expectedSGID {
 		t.Errorf("expected server to be in ServerGroupID %s; got %s", expectedID, expectedSGID)
+	}
+}
+
+func TestClient_DeleteServer(t *testing.T) {
+	var err error
+
+	ts := httptest.NewServer(authTestHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNoContent)
+	}), t))
+	defer ts.Close()
+
+	client := NewClient("", "")
+	client.BaseUrl, err = url.Parse(ts.URL)
+
+	if err != nil {
+		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
+	}
+
+	err = client.DeleteServer("id")
+
+	if err != nil {
+		t.Fatalf("server deletion failed: %v", err)
 	}
 }

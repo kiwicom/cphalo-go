@@ -70,5 +70,15 @@ func (c *Client) GetServer(ID string) (response GetServersResponse, err error) {
 }
 
 func (c *Client) DeleteServer(ID string) error {
+	req, err := c.NewRequest(http.MethodDelete, "servers/"+ID, nil, nil)
+	if err != nil {
+		return fmt.Errorf("cannot create new delete request: %v", err)
+	}
+
+	_, err = c.Do(req, nil)
+	if err != nil {
+		return fmt.Errorf("cannot execute delete request: %v", err)
+	}
+
 	return nil
 }
