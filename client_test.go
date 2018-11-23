@@ -80,3 +80,15 @@ func jsonResponseTestHandler(name string, t *testing.T, auth bool) http.Handler 
 
 	return http.HandlerFunc(fn)
 }
+
+func assertRequest(r *http.Request, t *testing.T, expectedMethod, expectedURI string) {
+	if t == nil {
+		t.Fatal("request not set for assertion")
+	}
+	if r.Method != expectedMethod {
+		t.Errorf("invalid method, expected %s; got %s", expectedMethod, r.Method)
+	}
+	if r.RequestURI != expectedURI {
+		t.Errorf("invalid URI, expected %s; got %s", expectedURI, r.RequestURI)
+	}
+}

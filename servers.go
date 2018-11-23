@@ -41,6 +41,12 @@ type GetServersResponse struct {
 	Server Server `json:"server"`
 }
 
+type RetireServerRequest struct {
+	Server struct {
+		Retire bool `json:"retire"`
+	} `json:"server"`
+}
+
 func (c *Client) ListServers() (response ListServersResponse, err error) {
 	req, err := c.NewRequest(http.MethodGet, "servers", nil, nil)
 	if err != nil {
@@ -78,6 +84,23 @@ func (c *Client) DeleteServer(ID string) error {
 	_, err = c.Do(req, nil)
 	if err != nil {
 		return fmt.Errorf("cannot execute delete request: %v", err)
+	}
+
+	return nil
+}
+
+func (c *Client) RetireServer(ID string) error {
+	reqData := RetireServerRequest{}
+	reqData.Server.Retire = true
+
+	req, err := c.NewRequest(http.MethodPut, "servers/"+ID, nil, reqData)
+	if err != nil {
+		return fmt.Errorf("cannot create new retire request: %v", err)
+	}
+
+	_, err = c.Do(req, nil)
+	if err != nil {
+		return fmt.Errorf("cannot execute retire request: %v", err)
 	}
 
 	return nil

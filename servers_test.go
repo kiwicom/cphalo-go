@@ -1,6 +1,8 @@
 package api
 
 import (
+	"encoding/json"
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -75,6 +77,7 @@ func TestClient_DeleteServer(t *testing.T) {
 	var err error
 
 	ts := httptest.NewServer(authTestHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assertRequest(r, t, http.MethodDelete, "/v1/servers/test")
 		w.WriteHeader(http.StatusNoContent)
 	}), t))
 	defer ts.Close()
@@ -86,9 +89,48 @@ func TestClient_DeleteServer(t *testing.T) {
 		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
 	}
 
-	err = client.DeleteServer("id")
+	err = client.DeleteServer("test")
 
 	if err != nil {
 		t.Fatalf("server deletion failed: %v", err)
+	}
+}
+
+func TestClient_RetireServer(t *testing.T) {
+	var err error
+
+	ts := httptest.NewServer(authTestHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assertRequest(r, t, http.MethodPut, "/v1/servers/test")
+
+		b, err := ioutil.ReadAll(r.Body)
+
+		if err != nil {
+			t.Fatalf("reading body failed: %v", err)
+		}
+
+		reqData := RetireServerRequest{}
+		if err := json.Unmarshal(b, &reqData); err != nil {
+			t.Fatalf("unmarshalling body failed: %v", err)
+		}
+
+		if !reqData.Server.Retire {
+			t.Error("retirement should be set to true")
+		}
+
+		w.WriteHeader(http.StatusNoContent)
+	}), t))
+	defer ts.Close()
+
+	client := NewClient("", "")
+	client.BaseUrl, err = url.Parse(ts.URL)
+
+	if err != nil {
+		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
+	}
+
+	err = client.RetireServer("test")
+
+	if err != nil {
+		t.Fatalf("server retirement failed: %v", err)
 	}
 }
