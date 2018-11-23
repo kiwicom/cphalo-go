@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -57,6 +58,24 @@ func authTestHandler(next http.Handler, t *testing.T) http.Handler {
 			return
 		}
 		next.ServeHTTP(w, r)
+	}
+
+	return http.HandlerFunc(fn)
+}
+
+func jsonResponseTestHandler(name string, t *testing.T, auth bool) http.Handler {
+	fn := func(w http.ResponseWriter, r *http.Request) {
+		b, err := ioutil.ReadFile(fmt.Sprintf("example_responses/%s.json", name))
+
+		if err != nil {
+			t.Fatalf("cannot read file: %v", err)
+		}
+
+		fmt.Fprint(w, string(b))
+	}
+
+	if auth {
+		return authTestHandler(http.HandlerFunc(fn), t)
 	}
 
 	return http.HandlerFunc(fn)

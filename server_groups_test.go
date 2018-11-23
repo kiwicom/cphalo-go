@@ -1,9 +1,6 @@
 package api
 
 import (
-	"fmt"
-	"io/ioutil"
-	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"testing"
@@ -14,15 +11,7 @@ func TestClient_ListServerGroups(t *testing.T) {
 	expectedResults := 2
 	expectedID := "9981f162c2d611e680b17f1fb185c564"
 
-	ts := httptest.NewServer(authTestHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		b, err := ioutil.ReadFile("example_responses/server_groups_list.json")
-
-		if err != nil {
-			t.Fatalf("cannot read file: %v", err)
-		}
-
-		fmt.Fprint(w, string(b))
-	}), t))
+	ts := httptest.NewServer(jsonResponseTestHandler("server_groups_list", t, true))
 	defer ts.Close()
 
 	client := NewClient("", "")
@@ -55,15 +44,7 @@ func TestClient_GetServerGroup(t *testing.T) {
 	var err error
 	expectedID := "0962bfa087bc01323e360670140ec224"
 
-	ts := httptest.NewServer(authTestHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		b, err := ioutil.ReadFile("example_responses/server_groups_get.json")
-
-		if err != nil {
-			t.Fatalf("cannot read file: %v", err)
-		}
-
-		fmt.Fprint(w, string(b))
-	}), t))
+	ts := httptest.NewServer(jsonResponseTestHandler("server_groups_get", t, true))
 	defer ts.Close()
 
 	client := NewClient("", "")
