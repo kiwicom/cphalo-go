@@ -9,10 +9,9 @@ type FirewallPolicy struct {
 	ID                    string         `json:"id,omitempty"`
 	URL                   string         `json:"url,omitempty"`
 	Name                  string         `json:"name,omitempty"`
-	Module                string         `json:"module,omitempty"`
 	Platform              string         `json:"platform,omitempty"`
+	Description           string         `json:"description,omitempty"`
 	Shared                bool           `json:"shared,omitempty"`
-	ReadOnly              bool           `json:"read_only,omitempty"`
 	FirewallRules         []FirewallRule `json:"firewall_rules,omitempty"`
 	IgnoreForwardingRules bool           `json:"ignore_forwarding_rules,omitempty"`
 }
