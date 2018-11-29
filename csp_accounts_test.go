@@ -49,6 +49,39 @@ func TestClient_ListCSPAccounts(t *testing.T) {
 	}
 }
 
+func TestClient_GetCSPAccounts(t *testing.T) {
+	var err error
+
+	ts := httptest.NewServer(
+		requestValidatorTestHandler(
+			jsonResponseTestHandler(t, "csp_accounts_get", http.StatusOK),
+			t,
+			http.MethodGet,
+			"/v1/csp_accounts/test",
+			nil,
+		),
+	)
+	defer ts.Close()
+
+	client := NewClient("", "")
+	client.BaseUrl, err = url.Parse(ts.URL)
+
+	if err != nil {
+		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
+	}
+
+	resp, err := client.GetCSPAccount("test")
+
+	if err != nil {
+		t.Fatalf("CSP account get failed: %v", err)
+	}
+
+	expectedID := "920b3f30-9204-469a-967c-878aa4a77c06"
+	if resp.CSPAccount.ID != expectedID {
+		t.Errorf("expected to get id %s; got %s", expectedID, resp.CSPAccount.ID)
+	}
+}
+
 func TestClient_CreateCSPAccount(t *testing.T) {
 	var err error
 	reqBody := CreateCSPAccountRequest{}

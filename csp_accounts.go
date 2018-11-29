@@ -49,10 +49,28 @@ type ListCSPAccountsResponse struct {
 	CSPAccounts []CSPAccount `json:"csp_accounts"`
 }
 
+type GetCSPAccountResponse struct {
+	CSPAccount CSPAccount `json:"csp_account"`
+}
+
 type CreateCSPAccountResponse string
 
 func (c *Client) ListCSPAccounts() (response ListCSPAccountsResponse, err error) {
 	req, err := c.NewRequest(http.MethodGet, "csp_accounts", nil, nil)
+	if err != nil {
+		return response, fmt.Errorf("cannot create new request: %v", err)
+	}
+
+	_, err = c.Do(req, &response)
+	if err != nil {
+		return response, fmt.Errorf("cannot execute request: %v", err)
+	}
+
+	return response, nil
+}
+
+func (c *Client) GetCSPAccount(ID string) (response GetCSPAccountResponse, err error) {
+	req, err := c.NewRequest(http.MethodGet, "csp_accounts/"+ID, nil, nil)
 	if err != nil {
 		return response, fmt.Errorf("cannot create new request: %v", err)
 	}
