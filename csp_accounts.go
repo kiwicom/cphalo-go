@@ -6,42 +6,43 @@ import (
 )
 
 type CreateCSPAccountRequest struct {
-	ExternalID     string `json:"external_id"`
-	RoleArn        string `json:"role_arn"`
-	SnsArn         string `json:"sns_arn,omitempty"`
-	GroupID        string `json:"group_id"`
-	CSPAccountType string `json:"csp_account_type"`
+	ExternalID         string `json:"external_id"`
+	RoleArn            string `json:"role_arn"`
+	SnsArn             string `json:"sns_arn,omitempty"`
+	GroupID            string `json:"group_id"`
+	CSPAccountType     string `json:"csp_account_type"`
+	AccountDisplayName string `json:"account_display_name"`
 }
 
 type CSPAccount struct {
 	ID                 string `json:"id"`
 	InitialScanSummary struct {
-		S3         string `json:"s3"`
-		Route53    string `json:"route53"`
-		Lambda     string `json:"lambda"`
-		Iam        string `json:"iam"`
-		Ec2        string `json:"ec2"`
-		Vpc        string `json:"vpc"`
-		CloudTrail string `json:"cloud_trail"`
-		APIGateway string `json:"api_gateway"`
-	} `json:"initial_scan_summary"`
-	ScanStatus               string      `json:"scan_status"`
-	InitialRulesRunCompleted bool        `json:"initial_rules_run_completed"`
-	CspAccountType           string      `json:"csp_account_type"`
-	AccountDisplayName       string      `json:"account_display_name"`
-	ErrorDetail              string      `json:"error_detail"`
-	CreatedAt                string      `json:"created_at"`
-	ExternalID               string      `json:"external_id"`
-	TimeOfLastScan           string      `json:"time_of_last_scan"`
-	InitialScanCompleted     bool        `json:"initial_scan_completed"`
-	SnsStatus                interface{} `json:"sns_status"`
-	RoleArn                  string      `json:"role_arn"`
-	UpdatedAt                string      `json:"updated_at"`
-	GroupID                  string      `json:"group_id"`
-	UserID                   string      `json:"user_id"`
-	CSPAccountAlias          string      `json:"csp_account_alias"`
-	CSPAccountID             string      `json:"csp_account_id"`
-	MonitoringState          string      `json:"monitoring_state"`
+		S3         string `json:"s3,omitempty"`
+		Route53    string `json:"route53,omitempty"`
+		Lambda     string `json:"lambda,omitempty"`
+		Iam        string `json:"iam,omitempty"`
+		Ec2        string `json:"ec2,omitempty"`
+		Vpc        string `json:"vpc,omitempty"`
+		CloudTrail string `json:"cloud_trail,omitempty"`
+		APIGateway string `json:"api_gateway,omitempty"`
+	} `json:"initial_scan_summary,omitempty"`
+	ScanStatus               string      `json:"scan_status,omitempty"`
+	InitialRulesRunCompleted bool        `json:"initial_rules_run_completed,omitempty"`
+	CSPAccountType           string      `json:"csp_account_type,omitempty"`
+	AccountDisplayName       string      `json:"account_display_name,omitempty"`
+	ErrorDetail              string      `json:"error_detail,omitempty"`
+	CreatedAt                string      `json:"created_at,omitempty"`
+	ExternalID               string      `json:"external_id,omitempty"`
+	TimeOfLastScan           string      `json:"time_of_last_scan,omitempty"`
+	InitialScanCompleted     bool        `json:"initial_scan_completed,omitempty"`
+	SnsStatus                interface{} `json:"sns_status,omitempty"`
+	RoleArn                  string      `json:"role_arn,omitempty"`
+	UpdatedAt                string      `json:"updated_at,omitempty"`
+	GroupID                  string      `json:"group_id,omitempty"`
+	UserID                   string      `json:"user_id,omitempty"`
+	CSPAccountAlias          string      `json:"csp_account_alias,omitempty"`
+	CSPAccountID             string      `json:"csp_account_id,omitempty"`
+	MonitoringState          string      `json:"monitoring_state,omitempty"`
 }
 
 type ListCSPAccountsResponse struct {
@@ -98,6 +99,23 @@ func (c *Client) CreateCSPAccount(account CreateCSPAccountRequest) (response Cre
 	}
 
 	return response, nil
+}
+
+func (c *Client) UpdateCSPAccount(account CSPAccount) error {
+	aID := account.ID
+	account.ID = ""
+
+	req, err := c.NewRequest(http.MethodPut, "csp_accounts/"+aID, nil, account)
+	if err != nil {
+		return fmt.Errorf("cannot create new update request: %v", err)
+	}
+
+	_, err = c.Do(req, nil)
+	if err != nil {
+		return fmt.Errorf("cannot execute update request: %v", err)
+	}
+
+	return nil
 }
 
 func (c *Client) DeleteCSPAccount(ID string) error {

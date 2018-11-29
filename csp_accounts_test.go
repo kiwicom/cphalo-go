@@ -112,7 +112,7 @@ func TestClient_CreateCSPAccount(t *testing.T) {
 	})
 
 	if err != nil {
-		t.Fatalf("CSP account deletion failed: %v", err)
+		t.Fatalf("CSP account creating failed: %v", err)
 	}
 
 	expectedID := "some-created-id"
@@ -122,6 +122,51 @@ func TestClient_CreateCSPAccount(t *testing.T) {
 
 	if reqBody.CSPAccountType != "AWS" {
 		t.Errorf("expected CSPAccountType to be AWS; got %s", reqBody.CSPAccountType)
+	}
+
+	if reqBody.ExternalID != expectedExternalID {
+		t.Errorf("expected ExternalID to be %s; got %s", expectedExternalID, reqBody.ExternalID)
+	}
+}
+
+func TestClient_UpdateCSPAccount(t *testing.T) {
+	var err error
+	reqBody := CSPAccount{}
+
+	ts := httptest.NewServer(
+		requestValidatorTestHandler(
+			jsonResponseTestHandler(t, "", http.StatusNoContent),
+			t,
+			http.MethodPut,
+			"/v1/csp_accounts/test",
+			&reqBody,
+		),
+	)
+	defer ts.Close()
+
+	client := NewClient("", "")
+	client.BaseUrl, err = url.Parse(ts.URL)
+
+	if err != nil {
+		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
+	}
+
+	expectedExternalID := "this-is-external-id-1"
+	account := CSPAccount{
+		ID:         "test",
+		RoleArn:    "arn:aws:iam::1234567890:role/CloudPassage-Service-Role",
+		GroupID:    "fff04606e97b11e111d9252f8ed31222",
+		ExternalID: expectedExternalID,
+	}
+
+	err = client.UpdateCSPAccount(account)
+
+	if err != nil {
+		t.Fatalf("CSP account updating failed: %v", err)
+	}
+
+	if reqBody.ExternalID != expectedExternalID {
+		t.Errorf("expected response to containt ID=%s; got %s", expectedExternalID, reqBody.ExternalID)
 	}
 
 	if reqBody.ExternalID != expectedExternalID {
