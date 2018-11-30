@@ -81,3 +81,103 @@ func TestClient_GetServerGroup(t *testing.T) {
 		t.Errorf("expected group to have ID %s; got %s", expectedID, resp.Group.ID)
 	}
 }
+
+func TestClient_CreateServerGroup(t *testing.T) {
+	var err error
+	reqBody := CreateServerGroupRequest{}
+
+	ts := httptest.NewServer(
+		requestValidatorTestHandler(
+			jsonResponseTestHandler(t, "server_groups_get", http.StatusCreated),
+			t,
+			http.MethodPost,
+			"/v1/groups",
+			&reqBody,
+		),
+	)
+	defer ts.Close()
+
+	client := NewClient("", "")
+	client.BaseUrl, err = url.Parse(ts.URL)
+
+	if err != nil {
+		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
+	}
+
+	name := "some-name"
+	resp, err := client.CreateServerGroup(ServerGroup{Name: name})
+
+	if err != nil {
+		t.Fatalf("CSP account creating failed: %v", err)
+	}
+
+	if reqBody.Group.Name != name {
+		t.Errorf("expected request to have group name %s; got %s", name, reqBody.Group.Name)
+	}
+
+	if len(resp.Group.ID) == 0 {
+		t.Errorf("response did not include group ID")
+	}
+}
+
+func TestClient_UpdateServerGroup(t *testing.T) {
+	var err error
+	reqBody := UpdateServerGroupRequest{}
+
+	ts := httptest.NewServer(
+		requestValidatorTestHandler(
+			jsonResponseTestHandler(t, "server_groups_get", http.StatusCreated),
+			t,
+			http.MethodPut,
+			"/v1/groups/some-id",
+			&reqBody,
+		),
+	)
+	defer ts.Close()
+
+	client := NewClient("", "")
+	client.BaseUrl, err = url.Parse(ts.URL)
+
+	if err != nil {
+		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
+	}
+
+	name := "another-name"
+	err = client.UpdateServerGroup(ServerGroup{ID: "some-id", Name: name})
+
+	if err != nil {
+		t.Fatalf("CSP account creating failed: %v", err)
+	}
+
+	if reqBody.Group.Name != name {
+		t.Errorf("expected request to have group name %s; got %s", name, reqBody.Group.Name)
+	}
+}
+
+func TestClient_DeleteServerGroup(t *testing.T) {
+	var err error
+
+	ts := httptest.NewServer(
+		requestValidatorTestHandler(
+			jsonResponseTestHandler(t, "", http.StatusNoContent),
+			t,
+			http.MethodDelete,
+			"/v1/groups/test",
+			nil,
+		),
+	)
+	defer ts.Close()
+
+	client := NewClient("", "")
+	client.BaseUrl, err = url.Parse(ts.URL)
+
+	if err != nil {
+		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
+	}
+
+	err = client.DeleteServerGroup("test")
+
+	if err != nil {
+		t.Fatalf("server group deletion failed: %v", err)
+	}
+}
