@@ -166,7 +166,7 @@ func TestClient_UpdateCSPAccount(t *testing.T) {
 	}
 
 	if reqBody.ExternalID != expectedExternalID {
-		t.Errorf("expected response to containt ID=%s; got %s", expectedExternalID, reqBody.ExternalID)
+		t.Errorf("expected request to contain ID=%s; got %s", expectedExternalID, reqBody.ExternalID)
 	}
 
 	if reqBody.ExternalID != expectedExternalID {
