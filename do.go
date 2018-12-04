@@ -92,18 +92,6 @@ func validateResponse(r *http.Response) error {
 	}
 
 	log.Println("processing error response, error code: ", r.StatusCode)
-	bodyBytes, err := ioutil.ReadAll(r.Body)
-
-	if err != nil {
-		return fmt.Errorf("cannot read error body: %v", err)
-	}
-
-	if len(bodyBytes) == 0 {
-		return fmt.Errorf("response failed with code %d without any extra information", r.StatusCode)
-	}
-
-	bodyString := string(bodyBytes)
-	log.Println("response body: ", bodyString)
 
 	var customErr error
 
@@ -117,6 +105,19 @@ func validateResponse(r *http.Response) error {
 	default:
 		customErr = &ResponseErrorGeneral{}
 	}
+
+	bodyBytes, err := ioutil.ReadAll(r.Body)
+
+	if err != nil {
+		return fmt.Errorf("cannot read error body: %v", err)
+	}
+
+	if len(bodyBytes) == 0 {
+		return customErr
+	}
+
+	bodyString := string(bodyBytes)
+	log.Println("response body: ", bodyString)
 
 	if err := json.Unmarshal(bodyBytes, &customErr); err != nil {
 		return fmt.Errorf("cannot unmarshall error response: %v", err)

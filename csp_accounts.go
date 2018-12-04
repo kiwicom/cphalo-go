@@ -64,7 +64,7 @@ func (c *Client) ListCSPAccounts() (response ListCSPAccountsResponse, err error)
 
 	_, err = c.Do(req, &response)
 	if err != nil {
-		return response, fmt.Errorf("cannot execute request: %v", err)
+		return response, err
 	}
 
 	return response, nil
@@ -78,7 +78,7 @@ func (c *Client) GetCSPAccount(ID string) (response GetCSPAccountResponse, err e
 
 	_, err = c.Do(req, &response)
 	if err != nil {
-		return response, fmt.Errorf("cannot execute request: %v", err)
+		return response, err
 	}
 
 	return response, nil
@@ -95,7 +95,7 @@ func (c *Client) CreateCSPAccount(account CreateCSPAccountRequest) (response Cre
 
 	_, err = c.Do(req, &response)
 	if err != nil {
-		return response, fmt.Errorf("cannot execute create request: %v", err)
+		return response, err
 	}
 
 	return response, nil
@@ -112,7 +112,7 @@ func (c *Client) UpdateCSPAccount(account CSPAccount) error {
 
 	_, err = c.Do(req, nil)
 	if err != nil {
-		return fmt.Errorf("cannot execute update request: %v", err)
+		return err
 	}
 
 	return nil
@@ -126,7 +126,7 @@ func (c *Client) DeleteCSPAccount(ID string) error {
 
 	_, err = c.Do(req, nil)
 	if err != nil {
-		return fmt.Errorf("cannot execute delete request: %v", err)
+		return err
 	}
 
 	return nil
