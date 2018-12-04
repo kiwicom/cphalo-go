@@ -104,12 +104,12 @@ func TestClient_CreateFirewallInterface(t *testing.T) {
 		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
 	}
 
-	policy := FirewallInterface{
+	fwInterface := FirewallInterface{
 		ID:   "id",
 		Name: "hello",
 	}
 
-	resp, err := client.CreateFirewallInterface(policy)
+	resp, err := client.CreateFirewallInterface(fwInterface)
 
 	if err != nil {
 		t.Fatalf("Firewall interface creating failed: %v", err)
@@ -120,12 +120,12 @@ func TestClient_CreateFirewallInterface(t *testing.T) {
 		t.Errorf("expected response to containt ID=%s; got %s", expectedID, resp.Interface.ID)
 	}
 
-	if reqBody.Interface.ID != policy.ID {
-		t.Errorf("expected request to contain ID=%s; got %s", policy.ID, reqBody.Interface.ID)
+	if reqBody.Interface.ID != fwInterface.ID {
+		t.Errorf("expected request to contain ID=%s; got %s", fwInterface.ID, reqBody.Interface.ID)
 	}
 
-	if reqBody.Interface.Name != policy.Name {
-		t.Errorf("expected request to contain Name=%s; got %s", policy.Name, reqBody.Interface.Name)
+	if reqBody.Interface.Name != fwInterface.Name {
+		t.Errorf("expected request to contain Name=%s; got %s", fwInterface.Name, reqBody.Interface.Name)
 	}
 }
 
@@ -151,23 +151,23 @@ func TestClient_UpdateFirewallInterface(t *testing.T) {
 		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
 	}
 
-	policy := FirewallInterface{
+	fwInterface := FirewallInterface{
 		ID:   "id",
 		Name: "hello",
 	}
 
-	err = client.UpdateFirewallInterface(policy)
+	err = client.UpdateFirewallInterface(fwInterface)
 
 	if err != nil {
 		t.Fatalf("Firewall interface updating failed: %v", err)
 	}
 
-	if reqBody.Interface.ID != policy.ID {
-		t.Errorf("expected request to contain ID=%s; got %s", policy.ID, reqBody.Interface.ID)
+	if reqBody.Interface.ID != fwInterface.ID {
+		t.Errorf("expected request to contain ID=%s; got %s", fwInterface.ID, reqBody.Interface.ID)
 	}
 
-	if reqBody.Interface.Name != policy.Name {
-		t.Errorf("expected request to contain Name=%s; got %s", policy.Name, reqBody.Interface.Name)
+	if reqBody.Interface.Name != fwInterface.Name {
+		t.Errorf("expected request to contain Name=%s; got %s", fwInterface.Name, reqBody.Interface.Name)
 	}
 }
 
