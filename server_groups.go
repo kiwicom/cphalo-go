@@ -9,6 +9,7 @@ type ServerGroup struct {
 	ID                    string         `json:"id,omitempty"`
 	URL                   string         `json:"url,omitempty"`
 	Name                  string         `json:"name,omitempty"`
+	Description           string         `json:"description,omitempty"`
 	ParentID              string         `json:"parent_id,omitempty"`
 	HasChildren           bool           `json:"has_children,omitempty"`
 	Tag                   string         `json:"tag,omitempty"`
