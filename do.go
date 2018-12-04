@@ -93,15 +93,22 @@ func validateResponse(r *http.Response) error {
 
 	log.Println("processing error response, error code: ", r.StatusCode)
 
-	var customErr error
+	var customErr CPHaloResponseError
 
-	switch r.StatusCode {
-	case 404:
-		customErr = &ResponseError404{}
-	case 500:
+	switch r.StatusCode / 100 {
+	case 4:
+		switch r.StatusCode {
+		case http.StatusNotFound:
+			customErr = &ResponseError404{}
+		case http.StatusUnprocessableEntity:
+			customErr = &ResponseError422{}
+		case http.StatusTooManyRequests:
+			customErr = &ResponseError429{}
+		default:
+			customErr = &ResponseError400{StatusCode: r.StatusCode}
+		}
+	case 5:
 		customErr = &ResponseError500{}
-	case 422:
-		customErr = &ResponseError422{}
 	default:
 		customErr = &ResponseErrorGeneral{}
 	}
