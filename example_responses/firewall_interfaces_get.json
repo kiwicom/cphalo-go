@@ -1,0 +1,11 @@
+{
+  "firewall_interface": {
+    "id": "eab41be09956012ee2db4087123ad87s",
+    "url": "https://api.cloudpassage.com/v1/firewall_interfaces/eab41be09956012ee2db4087123ad87s",
+    "name": "eth1",
+    "group_id": null,
+    "group_name": null,
+    "system": true,
+    "shared": true
+  }
+}

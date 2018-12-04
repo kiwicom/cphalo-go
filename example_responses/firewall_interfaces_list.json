@@ -1,0 +1,68 @@
+{
+  "count": 7,
+  "firewall_interfaces": [
+    {
+      "id": "eab260c09956012ee2db4087123ad87s",
+      "url": "https://api.cloudpassage.com/v1/firewall_interfaces/eab260c09956012ee2db4087123ad87s",
+      "name": "lo",
+      "group_id": null,
+      "group_name": null,
+      "system": true,
+      "shared": true
+    },
+    {
+      "id": "eab30a009956012ee2db4087123ad87s",
+      "url": "https://api.cloudpassage.com/v1/firewall_interfaces/eab30a009956012ee2db4087123ad87s",
+      "name": "eth0",
+      "group_id": null,
+      "group_name": null,
+      "system": true,
+      "shared": true
+    },
+    {
+      "id": "eab358809956012ee2db4087123ad87s",
+      "url": "https://api.cloudpassage.com/v1/firewall_interfaces/eab358809956012ee2db4087123ad87s",
+      "name": "eth0:1",
+      "group_id": null,
+      "group_name": null,
+      "system": true,
+      "shared": true
+    },
+    {
+      "id": "eab38d709956012ee2db4087123ad87s",
+      "url": "https://api.cloudpassage.com/v1/firewall_interfaces/eab38d709956012ee2db4087123ad87s",
+      "name": "eth0:2",
+      "group_id": null,
+      "group_name": null,
+      "system": true,
+      "shared": true
+    },
+    {
+      "id": "eab3c1509956012ee2db4087123ad87s",
+      "url": "https://api.cloudpassage.com/v1/firewall_interfaces/eab3c1509956012ee2db4087123ad87s",
+      "name": "eth0:3",
+      "group_id": null,
+      "group_name": null,
+      "system": true,
+      "shared": true
+    },
+    {
+      "id": "eab3ed509956012ee2db4087123ad87s",
+      "url": "https://api.cloudpassage.com/v1/firewall_interfaces/eab3ed509956012ee2db4087123ad87s",
+      "name": "eth0:4",
+      "group_id": null,
+      "group_name": null,
+      "system": true,
+      "shared": true
+    },
+    {
+      "id": "eab41be09956012ee2db4087123ad87s",
+      "url": "https://api.cloudpassage.com/v1/firewall_interfaces/eab41be09956012ee2db4087123ad87s",
+      "name": "eth1",
+      "group_id": null,
+      "group_name": null,
+      "system": true,
+      "shared": true
+    }
+  ]
+}
