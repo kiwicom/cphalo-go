@@ -1,0 +1,13 @@
+{
+  "firewall_service": {
+    "id": "ea3fe1309956012ee2989ea98as989as",
+    "url": "https://api.cloudpassage.com/v1/firewall_services/ea3fe1309956012ee2989ea98as989as",
+    "name": "ssh",
+    "group_id": null,
+    "group_name": null,
+    "protocol": "TCP",
+    "port": "22",
+    "system": true,
+    "shared": true
+  }
+}
