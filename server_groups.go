@@ -14,6 +14,7 @@ type ServerGroup struct {
 	HasChildren           bool           `json:"has_children,omitempty"`
 	Tag                   string         `json:"tag,omitempty"`
 	LinuxFirewallPolicyID NullableString `json:"linux_firewall_policy_id"`
+	AlertProfileIDs       []string       `json:"alert_profile_ids,omitempty"`
 }
 
 type ListServerGroupsResponse struct {
