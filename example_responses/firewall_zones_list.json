@@ -1,0 +1,17 @@
+{
+  "count": 1,
+  "firewall_zones": [
+    {
+      "id": "ea81ec609956012ee2db40989asd0980",
+      "url": "https://api.cloudpassage.com/v1/firewall_zones/ea81ec609956012ee2db40989asd0980",
+      "name": "any",
+      "group_id": null,
+      "group_name": null,
+      "description": null,
+      "ip_address": "0.0.0.0/0",
+      "system": true,
+      "shared": true,
+      "used_by": []
+    }
+  ]
+}
