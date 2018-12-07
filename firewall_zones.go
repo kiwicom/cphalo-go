@@ -5,6 +5,7 @@ import (
 	"net/http"
 )
 
+// FIXME: add description field
 type FirewallZone struct {
 	ID        string `json:"id,omitempty"`
 	URL       string `json:"url,omitempty"`
