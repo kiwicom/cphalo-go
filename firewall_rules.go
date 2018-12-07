@@ -5,14 +5,28 @@ import (
 	"net/http"
 )
 
+// FIXME:
+// - find a better way, which would also accommodate other types of source/target: user, group, user_group
+// - currently a FirewallZone is expected
+type FirewallRuleInlineSourceTarget struct {
+	ID        string `json:"id,omitempty"`
+	Name      string `json:"name,omitempty"`
+	IpAddress string `json:"ip_address,omitempty"`
+	Type      string `json:"type,omitempty"`
+}
+
 type FirewallRule struct {
-	ID               string `json:"id,omitempty"`
-	URL              string `json:"url,omitempty"`
-	Chain            string `json:"chain,omitempty"`
-	Action           string `json:"action,omitempty"`
-	Active           bool   `json:"active,omitempty"`
-	ConnectionStates string `json:"connection_states,omitempty"`
-	Position         int    `json:"position,omitempty"`
+	ID                string                          `json:"id,omitempty"`
+	URL               string                          `json:"url,omitempty"`
+	Chain             string                          `json:"chain,omitempty"`
+	Action            string                          `json:"action,omitempty"`
+	Active            bool                            `json:"active,omitempty"`
+	ConnectionStates  string                          `json:"connection_states,omitempty"`
+	Position          int                             `json:"position,omitempty"`
+	FirewallInterface *FirewallInterface              `json:"firewall_interface,omitempty"`
+	FirewallService   *FirewallService                `json:"firewall_service,omitempty"`
+	FirewallSource    *FirewallRuleInlineSourceTarget `json:"firewall_source,omitempty"`
+	FirewallTarget    *FirewallRuleInlineSourceTarget `json:"firewall_target,omitempty"`
 }
 
 type ListFirewallRulesResponse struct {
@@ -27,6 +41,16 @@ type GetFirewallRuleResponse struct {
 type CreateFirewallRuleResponse = GetFirewallRuleResponse
 type CreateFirewallRuleRequest = GetFirewallRuleResponse
 type UpdateFirewallRuleRequest = GetFirewallRuleResponse
+
+func (r *FirewallRule) applyMissingFields() {
+	if r.FirewallSource != nil && r.FirewallSource.ID != "" {
+		r.FirewallSource.Type = "FirewallZone"
+	}
+
+	if r.FirewallTarget != nil && r.FirewallTarget.ID != "" {
+		r.FirewallTarget.Type = "FirewallZone"
+	}
+}
 
 func (c *Client) ListFirewallRules(policyID string) (response ListFirewallRulesResponse, err error) {
 	url := fmt.Sprintf("firewall_policies/%s/firewall_rules", policyID)
@@ -60,6 +84,7 @@ func (c *Client) GetFirewallRule(policyID, ruleID string) (response GetFirewallR
 
 func (c *Client) CreateFirewallRule(policyID string, rule FirewallRule) (response CreateFirewallRuleResponse, err error) {
 	url := fmt.Sprintf("firewall_policies/%s/firewall_rules", policyID)
+	rule.applyMissingFields()
 	req, err := c.NewRequest(http.MethodPost, url, nil, CreateFirewallRuleRequest{Rule: rule})
 	if err != nil {
 		return response, fmt.Errorf("cannot create new create request: %v", err)
@@ -75,6 +100,7 @@ func (c *Client) CreateFirewallRule(policyID string, rule FirewallRule) (respons
 
 func (c *Client) UpdateFirewallRule(policyID string, rule FirewallRule) error {
 	url := fmt.Sprintf("firewall_policies/%s/firewall_rules/%s", policyID, rule.ID)
+	rule.applyMissingFields()
 	req, err := c.NewRequest(http.MethodPut, url, nil, UpdateFirewallRuleRequest{Rule: rule})
 	if err != nil {
 		return fmt.Errorf("cannot create new update request: %v", err)
