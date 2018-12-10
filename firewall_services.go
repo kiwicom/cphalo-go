@@ -11,6 +11,7 @@ type FirewallService struct {
 	Name     string `json:"name,omitempty"`
 	Protocol string `json:"protocol,omitempty"`
 	Port     string `json:"port,omitempty"`
+	System   bool   `json:"system,omitempty"`
 }
 
 type ListFirewallServicesResponse struct {
