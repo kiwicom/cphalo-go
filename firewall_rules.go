@@ -114,21 +114,6 @@ func (c *Client) UpdateFirewallRule(policyID string, rule FirewallRule) error {
 	return nil
 }
 
-func (c *Client) MoveFirewallRule(policyID string, rule FirewallRule) error {
-	url := fmt.Sprintf("firewall_policies/%s/firewall_rules/%s", policyID, rule.ID)
-	req, err := c.NewRequest(http.MethodPut, url, nil, UpdateFirewallRuleRequest{Rule: rule})
-	if err != nil {
-		return fmt.Errorf("cannot create new update request: %v", err)
-	}
-
-	_, err = c.Do(req, nil)
-	if err != nil {
-		return fmt.Errorf("cannot execute update request: %v", err)
-	}
-
-	return nil
-}
-
 func (c *Client) DeleteFirewallRule(policyID, ruleID string) error {
 	url := fmt.Sprintf("firewall_policies/%s/firewall_rules/%s", policyID, ruleID)
 	req, err := c.NewRequest(http.MethodDelete, url, nil, nil)
