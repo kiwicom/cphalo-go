@@ -11,6 +11,7 @@ type FirewallZone struct {
 	Name        string `json:"name,omitempty"`
 	IpAddress   string `json:"ip_address,omitempty"`
 	Description string `json:"description,omitempty"`
+	System      bool   `json:"system,omitempty"`
 }
 
 type ListFirewallZonesResponse struct {

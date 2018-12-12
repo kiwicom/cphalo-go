@@ -6,9 +6,10 @@ import (
 )
 
 type FirewallInterface struct {
-	ID   string `json:"id,omitempty"`
-	URL  string `json:"url,omitempty"`
-	Name string `json:"name,omitempty"`
+	ID     string `json:"id,omitempty"`
+	URL    string `json:"url,omitempty"`
+	Name   string `json:"name,omitempty"`
+	System bool   `json:"system,omitempty"`
 }
 
 type ListFirewallInterfacesResponse struct {
