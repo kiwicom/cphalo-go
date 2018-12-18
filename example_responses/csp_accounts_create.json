@@ -1,1 +1,21 @@
-"some-created-id"
+{
+  "csp_account": {
+    "initial_scan_summary": {},
+    "scan_status": "completed",
+    "initial_rules_run_completed": false,
+    "csp_account_type": "AWS",
+    "account_display_name": "tf_aws_testacc_basic_01",
+    "created_at": "2018-12-18T09:38:38.000725+0000",
+    "external_id": "this-is-some-id-for-tf-cphalo-testacc",
+    "initial_scan_completed": false,
+    "sns_status": null,
+    "role_arn": "arn:aws:iam::711106534000:role/tf_testacc_cloudpassage_role",
+    "updated_at": "2018-12-18T09:38:38.000725+0000",
+    "group_id": "fff04606e97b11e906d9252f8ed31fc8",
+    "user_id": "d4b14d22de69118eb12349d3fa227391",
+    "csp_account_alias": "782106534321",
+    "csp_account_id": "782106534123",
+    "id": "some-created-id",
+    "monitoring_state": "active"
+  }
+}

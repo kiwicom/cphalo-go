@@ -54,7 +54,7 @@ type GetCSPAccountResponse struct {
 	CSPAccount CSPAccount `json:"csp_account"`
 }
 
-type CreateCSPAccountResponse string
+type CreateCSPAccountResponse GetCSPAccountResponse
 
 func (c *Client) ListCSPAccounts() (response ListCSPAccountsResponse, err error) {
 	req, err := c.NewRequest(http.MethodGet, "csp_accounts", nil, nil)

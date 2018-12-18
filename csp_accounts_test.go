@@ -116,8 +116,8 @@ func TestClient_CreateCSPAccount(t *testing.T) {
 	}
 
 	expectedID := "some-created-id"
-	if resp != CreateCSPAccountResponse(expectedID) {
-		t.Errorf("expected response to containt ID=%s; got %s", expectedID, resp)
+	if resp.CSPAccount.ID != expectedID {
+		t.Errorf("expected response to containt ID=%s; got %s", expectedID, resp.CSPAccount.ID)
 	}
 
 	if reqBody.CSPAccountType != "AWS" {
