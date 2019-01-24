@@ -47,7 +47,7 @@ type CreateFirewallRuleResponse = GetFirewallRuleResponse
 type CreateFirewallRuleRequest = GetFirewallRuleResponse
 type UpdateFirewallRuleRequest = GetFirewallRuleResponse
 
-func (r *FirewallRule) applySourceTargetCorrections() {
+func (r *FirewallRule) applyCorrections() {
 	const (
 		allServers = "All Active Servers"
 		allUsers   = "All GhostPorts users"
@@ -82,6 +82,10 @@ func (r *FirewallRule) applySourceTargetCorrections() {
 			}
 		}
 	}
+
+	if r.ConnectionStates == "ANY" {
+		r.ConnectionStates = ""
+	}
 }
 
 func (c *Client) ListFirewallRules(policyID string) (response ListFirewallRulesResponse, err error) {
@@ -94,6 +98,12 @@ func (c *Client) ListFirewallRules(policyID string) (response ListFirewallRulesR
 	_, err = c.Do(req, &response)
 	if err != nil {
 		return response, fmt.Errorf("cannot execute request: %v", err)
+	}
+
+	for _, rule := range response.Rules {
+		if rule.ConnectionStates == "" {
+			rule.ConnectionStates = "ANY"
+		}
 	}
 
 	return response, nil
@@ -111,12 +121,16 @@ func (c *Client) GetFirewallRule(policyID, ruleID string) (response GetFirewallR
 		return response, err
 	}
 
+	if response.Rule.ConnectionStates == "" {
+		response.Rule.ConnectionStates = "ANY"
+	}
+
 	return response, nil
 }
 
 func (c *Client) CreateFirewallRule(policyID string, rule FirewallRule) (response CreateFirewallRuleResponse, err error) {
 	url := fmt.Sprintf("firewall_policies/%s/firewall_rules", policyID)
-	rule.applySourceTargetCorrections()
+	rule.applyCorrections()
 	req, err := c.NewRequest(http.MethodPost, url, nil, CreateFirewallRuleRequest{Rule: rule})
 	if err != nil {
 		return response, fmt.Errorf("cannot create new create request: %v", err)
@@ -132,7 +146,7 @@ func (c *Client) CreateFirewallRule(policyID string, rule FirewallRule) (respons
 
 func (c *Client) UpdateFirewallRule(policyID string, rule FirewallRule) error {
 	url := fmt.Sprintf("firewall_policies/%s/firewall_rules/%s", policyID, rule.ID)
-	rule.applySourceTargetCorrections()
+	rule.applyCorrections()
 	req, err := c.NewRequest(http.MethodPut, url, nil, UpdateFirewallRuleRequest{Rule: rule})
 	if err != nil {
 		return fmt.Errorf("cannot create new update request: %v", err)
