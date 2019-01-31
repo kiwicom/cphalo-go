@@ -5,18 +5,31 @@ import (
 	"net/http"
 )
 
-type CreateCSPAccountRequest struct {
-	ExternalID         string `json:"external_id"`
-	RoleArn            string `json:"role_arn"`
-	SnsArn             string `json:"sns_arn,omitempty"`
-	GroupID            string `json:"group_id"`
-	CSPAccountType     string `json:"csp_account_type"`
-	AccountDisplayName string `json:"account_display_name"`
+type CreateCSPAccountAWSRequest struct {
+	ExternalID         string `json:"aws_external_id,omitempty"`
+	RoleArn            string `json:"aws_role_arn,omitempty"`
+	SnsArn             string `json:"aws_sns_arn,omitempty"`
+	GroupID            string `json:"group_id,omitempty"`
+	CSPAccountType     string `json:"csp_account_type,omitempty"`
+	CSPRegionType      string `json:"csp_region_type,omitempty"`
+	AccountDisplayName string `json:"account_display_name,omitempty"`
 }
 
 type CSPAccount struct {
-	ID                 string `json:"id"`
-	InitialScanSummary struct {
+	ID                       string `json:"id"`
+	CSPAccountType           string `json:"csp_account_type,omitempty"`
+	CSPRegionType            string `json:"csp_region_type,omitempty"`
+	CSPAccountID             string `json:"csp_account_id,omitempty"`
+	CSPAccountAlias          string `json:"csp_account_alias,omitempty"`
+	AccountDisplayName       string `json:"account_display_name,omitempty"`
+	CreatedAt                string `json:"created_at,omitempty"`
+	UpdatedAt                string `json:"updated_at,omitempty"`
+	UserID                   string `json:"user_id,omitempty"`
+	GroupID                  string `json:"group_id,omitempty"`
+	MonitoringState          string `json:"monitoring_state,omitempty"`
+	InitialScanCompleted     bool   `json:"initial_scan_completed,omitempty"`
+	InitialRulesRunCompleted bool   `json:"initial_rules_run_completed,omitempty"`
+	InitialScanSummary       struct {
 		S3         string `json:"s3,omitempty"`
 		Route53    string `json:"route53,omitempty"`
 		Lambda     string `json:"lambda,omitempty"`
@@ -26,23 +39,19 @@ type CSPAccount struct {
 		CloudTrail string `json:"cloud_trail,omitempty"`
 		APIGateway string `json:"api_gateway,omitempty"`
 	} `json:"initial_scan_summary,omitempty"`
-	ScanStatus               string      `json:"scan_status,omitempty"`
-	InitialRulesRunCompleted bool        `json:"initial_rules_run_completed,omitempty"`
-	CSPAccountType           string      `json:"csp_account_type,omitempty"`
-	AccountDisplayName       string      `json:"account_display_name,omitempty"`
-	ErrorDetail              string      `json:"error_detail,omitempty"`
-	CreatedAt                string      `json:"created_at,omitempty"`
-	ExternalID               string      `json:"external_id,omitempty"`
-	TimeOfLastScan           string      `json:"time_of_last_scan,omitempty"`
-	InitialScanCompleted     bool        `json:"initial_scan_completed,omitempty"`
-	SnsStatus                interface{} `json:"sns_status,omitempty"`
-	RoleArn                  string      `json:"role_arn,omitempty"`
-	UpdatedAt                string      `json:"updated_at,omitempty"`
-	GroupID                  string      `json:"group_id,omitempty"`
-	UserID                   string      `json:"user_id,omitempty"`
-	CSPAccountAlias          string      `json:"csp_account_alias,omitempty"`
-	CSPAccountID             string      `json:"csp_account_id,omitempty"`
-	MonitoringState          string      `json:"monitoring_state,omitempty"`
+	ScanStatus          string `json:"scan_status,omitempty"`
+	ErrorDetail         string `json:"error_detail,omitempty"`
+	TimeOfLastScan      string `json:"time_of_last_scan,omitempty"`
+	AzureDirectoryID    string `json:"azure_directory_id,omitempty"`
+	AzureApplicationID  string `json:"azure_application_id,omitempty"`
+	AzureApplicationKey string `json:"azure_application_key,omitempty"`
+	AWSAccessKey        string `json:"aws_access_key,omitempty"`
+	AWSSecret           string `json:"aws_secret,omitempty"`
+	AWSRoleArn          string `json:"aws_role_arn,omitempty"`
+	AWSExternalID       string `json:"aws_external_id,omitempty"`
+	AWSSnsStatus        string `json:"aws_sns_status,omitempty"`
+	AwsSnsArn           string `json:"aws_sns_arn,omitempty"`
+	AwsSnsErrorDetail   string `json:"aws_sns_error_detail,omitempty"`
 }
 
 type ListCSPAccountsResponse struct {
@@ -84,10 +93,7 @@ func (c *Client) GetCSPAccount(ID string) (response GetCSPAccountResponse, err e
 	return response, nil
 }
 
-func (c *Client) CreateCSPAccount(account CreateCSPAccountRequest) (response CreateCSPAccountResponse, err error) {
-	// only AWS is supported at the moment
-	account.CSPAccountType = "AWS"
-
+func (c *Client) CreateCSPAccount(account CreateCSPAccountAWSRequest) (response CreateCSPAccountResponse, err error) {
 	req, err := c.NewRequest(http.MethodPost, "csp_accounts", nil, account)
 	if err != nil {
 		return response, fmt.Errorf("cannot create new create request: %v", err)

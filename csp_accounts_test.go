@@ -84,7 +84,7 @@ func TestClient_GetCSPAccounts(t *testing.T) {
 
 func TestClient_CreateCSPAccount(t *testing.T) {
 	var err error
-	reqBody := CreateCSPAccountRequest{}
+	reqBody := CreateCSPAccountAWSRequest{}
 
 	ts := httptest.NewServer(
 		requestValidatorTestHandler(
@@ -105,10 +105,11 @@ func TestClient_CreateCSPAccount(t *testing.T) {
 	}
 
 	expectedExternalID := "this-is-external-id-1"
-	resp, err := client.CreateCSPAccount(CreateCSPAccountRequest{
-		RoleArn:    "arn:aws:iam::1234567890:role/CloudPassage-Service-Role",
-		GroupID:    "fff04606e97b11e111d9252f8ed31222",
-		ExternalID: expectedExternalID,
+	resp, err := client.CreateCSPAccount(CreateCSPAccountAWSRequest{
+		RoleArn:        "arn:aws:iam::1234567890:role/CloudPassage-Service-Role",
+		GroupID:        "fff04606e97b11e111d9252f8ed31222",
+		ExternalID:     expectedExternalID,
+		CSPAccountType: "aws",
 	})
 
 	if err != nil {
@@ -120,7 +121,7 @@ func TestClient_CreateCSPAccount(t *testing.T) {
 		t.Errorf("expected response to containt ID=%s; got %s", expectedID, resp.CSPAccount.ID)
 	}
 
-	if reqBody.CSPAccountType != "AWS" {
+	if reqBody.CSPAccountType != "aws" {
 		t.Errorf("expected CSPAccountType to be AWS; got %s", reqBody.CSPAccountType)
 	}
 
@@ -153,10 +154,10 @@ func TestClient_UpdateCSPAccount(t *testing.T) {
 
 	expectedExternalID := "this-is-external-id-1"
 	account := CSPAccount{
-		ID:         "test",
-		RoleArn:    "arn:aws:iam::1234567890:role/CloudPassage-Service-Role",
-		GroupID:    "fff04606e97b11e111d9252f8ed31222",
-		ExternalID: expectedExternalID,
+		ID:            "test",
+		AWSRoleArn:    "arn:aws:iam::1234567890:role/CloudPassage-Service-Role",
+		GroupID:       "fff04606e97b11e111d9252f8ed31222",
+		AWSExternalID: expectedExternalID,
 	}
 
 	err = client.UpdateCSPAccount(account)
@@ -165,12 +166,12 @@ func TestClient_UpdateCSPAccount(t *testing.T) {
 		t.Fatalf("CSP account updating failed: %v", err)
 	}
 
-	if reqBody.ExternalID != expectedExternalID {
-		t.Errorf("expected request to contain ID=%s; got %s", expectedExternalID, reqBody.ExternalID)
+	if reqBody.AWSExternalID != expectedExternalID {
+		t.Errorf("expected request to contain ID=%s; got %s", expectedExternalID, reqBody.AWSExternalID)
 	}
 
-	if reqBody.ExternalID != expectedExternalID {
-		t.Errorf("expected ExternalID to be %s; got %s", expectedExternalID, reqBody.ExternalID)
+	if reqBody.AWSExternalID != expectedExternalID {
+		t.Errorf("expected ExternalID to be %s; got %s", expectedExternalID, reqBody.AWSExternalID)
 	}
 }
 
