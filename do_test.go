@@ -29,7 +29,7 @@ func TestValidateResponse(t *testing.T) {
 
 			if len(tt.bodyFile) > 0 {
 
-				path := fmt.Sprintf("example_responses/%s", tt.bodyFile)
+				path := fmt.Sprintf("testdata/%s", tt.bodyFile)
 				b, err = ioutil.ReadFile(path)
 
 				if err != nil {

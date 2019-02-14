@@ -76,7 +76,6 @@ func parseResponse(r *http.Response, v interface{}) error {
 	}
 
 	bodyString := string(bodyBytes)
-	//fmt.Println(bodyString)
 	err = json.Unmarshal([]byte(bodyString), &v)
 
 	if err != nil {

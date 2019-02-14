@@ -18,7 +18,7 @@ func TestClient_RenewAccessToken(t *testing.T) {
 		{
 			"valid_access_token",
 			func(w http.ResponseWriter, r *http.Request) {
-				b, err := ioutil.ReadFile("example_responses/access_token.json")
+				b, err := ioutil.ReadFile("testdata/access_token.json")
 
 				if err != nil {
 					t.Fatalf("cannot read file: %v", err)
@@ -31,7 +31,7 @@ func TestClient_RenewAccessToken(t *testing.T) {
 		{
 			"invalid_access_token",
 			func(w http.ResponseWriter, r *http.Request) {
-				b, err := ioutil.ReadFile("example_responses/error_invalid_token.json")
+				b, err := ioutil.ReadFile("testdata/error_invalid_token.json")
 
 				if err != nil {
 					t.Fatalf("cannot read file: %v", err)

@@ -44,7 +44,7 @@ func TestNewClient(t *testing.T) {
 func authTestHandler(next http.Handler, t *testing.T) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		if strings.HasPrefix(r.RequestURI, "/oauth") {
-			b, err := ioutil.ReadFile("example_responses/access_token.json")
+			b, err := ioutil.ReadFile("testdata/access_token.json")
 
 			if err != nil {
 				t.Fatalf("cannot read file: %v", err)
@@ -72,7 +72,7 @@ func jsonResponseTestHandler(t *testing.T, responseFile string, code int) http.H
 			return
 		}
 
-		b, err := ioutil.ReadFile(fmt.Sprintf("example_responses/%s.json", responseFile))
+		b, err := ioutil.ReadFile(fmt.Sprintf("testdata/%s.json", responseFile))
 
 		if err != nil {
 			t.Fatalf("cannot read file: %v", err)

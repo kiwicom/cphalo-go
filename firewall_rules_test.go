@@ -1,7 +1,6 @@
 package api
 
 import (
-	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -40,8 +39,6 @@ func TestClient_ListFirewallRules(t *testing.T) {
 	if resp.Count != expectedResults {
 		t.Errorf("expected count to be %d; got %d", expectedResults, resp.Count)
 	}
-
-	fmt.Println(resp)
 
 	if len(resp.Rules) != expectedResults {
 		t.Errorf("expected %d firewall rules; got %d", expectedResults, resp.Count)
