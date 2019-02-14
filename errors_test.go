@@ -7,7 +7,7 @@ import (
 
 func TestResponseError(t *testing.T) {
 	tests := []struct {
-		err  CPHaloResponseError
+		err  ResponseError
 		code int
 		msg  string
 	}{

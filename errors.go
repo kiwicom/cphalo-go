@@ -5,14 +5,14 @@ import (
 	"net/http"
 )
 
-var _ CPHaloResponseError = &ResponseErrorGeneral{}
-var _ CPHaloResponseError = &ResponseError400{}
-var _ CPHaloResponseError = &ResponseError404{}
-var _ CPHaloResponseError = &ResponseError422{}
-var _ CPHaloResponseError = &ResponseError429{}
-var _ CPHaloResponseError = &ResponseError500{}
+var _ ResponseError = &ResponseErrorGeneral{}
+var _ ResponseError = &ResponseError400{}
+var _ ResponseError = &ResponseError404{}
+var _ ResponseError = &ResponseError422{}
+var _ ResponseError = &ResponseError429{}
+var _ ResponseError = &ResponseError500{}
 
-type CPHaloResponseError interface {
+type ResponseError interface {
 	Error() string
 	GetStatusCode() int
 }

@@ -86,7 +86,7 @@ func validateResponse(r *http.Response) error {
 		return nil
 	}
 
-	var customErr CPHaloResponseError
+	var customErr ResponseError
 
 	switch r.StatusCode / 100 {
 	case 4:
