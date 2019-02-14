@@ -15,10 +15,10 @@ type accessTokenResponse struct {
 	ExpiresIn   int    `json:"expires_in"`
 }
 
-func (c *client) renewAccessToken() error {
+func (c *Client) renewAccessToken() error {
 	rsc := "/oauth/access_token?grant_type=client_credentials"
-	rawURL := c.baseUrl.String() + rsc
-	baseUrl, err := url.Parse(rawURL)
+	rawURL := c.baseURL.String() + rsc
+	baseURL, err := url.Parse(rawURL)
 
 	if err != nil {
 		return fmt.Errorf("cannot parse url %s: %v", rawURL, err)
@@ -27,7 +27,7 @@ func (c *client) renewAccessToken() error {
 	authString := c.appKey + ":" + c.appSecret
 	encodedAuthString := base64.StdEncoding.EncodeToString([]byte(authString))
 
-	req, err := http.NewRequest(http.MethodPost, baseUrl.String(), nil)
+	req, err := http.NewRequest(http.MethodPost, baseURL.String(), nil)
 
 	if err != nil {
 		return fmt.Errorf("failed to create request: %v", err)

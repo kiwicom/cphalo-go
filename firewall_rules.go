@@ -8,7 +8,7 @@ import (
 type FirewallRuleSourceTarget struct {
 	ID        string `json:"id,omitempty"`
 	Name      string `json:"name,omitempty"`
-	IpAddress string `json:"ip_address,omitempty"`
+	IPAddress string `json:"ip_address,omitempty"`
 	Kind      string `json:"type,omitempty"`
 }
 
@@ -88,7 +88,7 @@ func (r *FirewallRule) applyCorrections() {
 	}
 }
 
-func (c *client) ListFirewallRules(policyID string) (response ListFirewallRulesResponse, err error) {
+func (c *Client) ListFirewallRules(policyID string) (response ListFirewallRulesResponse, err error) {
 	url := fmt.Sprintf("firewall_policies/%s/firewall_rules", policyID)
 	req, err := c.newRequest(http.MethodGet, url, nil, nil)
 	if err != nil {
@@ -109,7 +109,7 @@ func (c *client) ListFirewallRules(policyID string) (response ListFirewallRulesR
 	return response, nil
 }
 
-func (c *client) GetFirewallRule(policyID, ruleID string) (response GetFirewallRuleResponse, err error) {
+func (c *Client) GetFirewallRule(policyID, ruleID string) (response GetFirewallRuleResponse, err error) {
 	url := fmt.Sprintf("firewall_policies/%s/firewall_rules/%s", policyID, ruleID)
 	req, err := c.newRequest(http.MethodGet, url, nil, nil)
 	if err != nil {
@@ -128,7 +128,7 @@ func (c *client) GetFirewallRule(policyID, ruleID string) (response GetFirewallR
 	return response, nil
 }
 
-func (c *client) CreateFirewallRule(policyID string, rule FirewallRule) (response CreateFirewallRuleResponse, err error) {
+func (c *Client) CreateFirewallRule(policyID string, rule FirewallRule) (response CreateFirewallRuleResponse, err error) {
 	url := fmt.Sprintf("firewall_policies/%s/firewall_rules", policyID)
 	rule.applyCorrections()
 	req, err := c.newRequest(http.MethodPost, url, nil, CreateFirewallRuleRequest{Rule: rule})
@@ -144,7 +144,7 @@ func (c *client) CreateFirewallRule(policyID string, rule FirewallRule) (respons
 	return response, nil
 }
 
-func (c *client) UpdateFirewallRule(policyID string, rule FirewallRule) error {
+func (c *Client) UpdateFirewallRule(policyID string, rule FirewallRule) error {
 	url := fmt.Sprintf("firewall_policies/%s/firewall_rules/%s", policyID, rule.ID)
 	rule.applyCorrections()
 	req, err := c.newRequest(http.MethodPut, url, nil, UpdateFirewallRuleRequest{Rule: rule})
@@ -160,7 +160,7 @@ func (c *client) UpdateFirewallRule(policyID string, rule FirewallRule) error {
 	return nil
 }
 
-func (c *client) DeleteFirewallRule(policyID, ruleID string) error {
+func (c *Client) DeleteFirewallRule(policyID, ruleID string) error {
 	url := fmt.Sprintf("firewall_policies/%s/firewall_rules/%s", policyID, ruleID)
 	req, err := c.newRequest(http.MethodDelete, url, nil, nil)
 	if err != nil {

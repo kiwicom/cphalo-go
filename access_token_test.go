@@ -51,7 +51,7 @@ func TestClient_RenewAccessToken(t *testing.T) {
 			defer ts.Close()
 
 			client := NewClient("", "")
-			client.baseUrl, err = url.Parse(ts.URL)
+			client.baseURL, err = url.Parse(ts.URL)
 
 			if err != nil {
 				t.Fatalf("cannot parse test url: %v", err)
@@ -72,7 +72,7 @@ func TestClient_RenewAccessToken(t *testing.T) {
 
 			expectedToken := "some_token_for_cp_halo_rest_api1"
 			if client.accessToken != expectedToken {
-				t.Errorf("client's access token not properly set, expected %s; got %s", expectedToken, client.accessToken)
+				t.Errorf("Client's access token not properly set, expected %s; got %s", expectedToken, client.accessToken)
 			}
 		})
 	}

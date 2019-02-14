@@ -65,7 +65,7 @@ type GetCSPAccountResponse struct {
 
 type CreateCSPAccountResponse GetCSPAccountResponse
 
-func (c *client) ListCSPAccounts() (response ListCSPAccountsResponse, err error) {
+func (c *Client) ListCSPAccounts() (response ListCSPAccountsResponse, err error) {
 	req, err := c.newRequest(http.MethodGet, "csp_accounts", nil, nil)
 	if err != nil {
 		return response, fmt.Errorf("cannot create new request: %v", err)
@@ -79,7 +79,7 @@ func (c *client) ListCSPAccounts() (response ListCSPAccountsResponse, err error)
 	return response, nil
 }
 
-func (c *client) GetCSPAccount(ID string) (response GetCSPAccountResponse, err error) {
+func (c *Client) GetCSPAccount(ID string) (response GetCSPAccountResponse, err error) {
 	req, err := c.newRequest(http.MethodGet, "csp_accounts/"+ID, nil, nil)
 	if err != nil {
 		return response, fmt.Errorf("cannot create new request: %v", err)
@@ -93,7 +93,7 @@ func (c *client) GetCSPAccount(ID string) (response GetCSPAccountResponse, err e
 	return response, nil
 }
 
-func (c *client) CreateCSPAccount(account CreateCSPAccountAWSRequest) (response CreateCSPAccountResponse, err error) {
+func (c *Client) CreateCSPAccount(account CreateCSPAccountAWSRequest) (response CreateCSPAccountResponse, err error) {
 	req, err := c.newRequest(http.MethodPost, "csp_accounts", nil, account)
 	if err != nil {
 		return response, fmt.Errorf("cannot create new create request: %v", err)
@@ -107,7 +107,7 @@ func (c *client) CreateCSPAccount(account CreateCSPAccountAWSRequest) (response 
 	return response, nil
 }
 
-func (c *client) UpdateCSPAccount(account CSPAccount) error {
+func (c *Client) UpdateCSPAccount(account CSPAccount) error {
 	aID := account.ID
 	account.ID = ""
 
@@ -124,7 +124,7 @@ func (c *client) UpdateCSPAccount(account CSPAccount) error {
 	return nil
 }
 
-func (c *client) DeleteCSPAccount(ID string) error {
+func (c *Client) DeleteCSPAccount(ID string) error {
 	req, err := c.newRequest(http.MethodDelete, "csp_accounts/"+ID, nil, nil)
 	if err != nil {
 		return fmt.Errorf("cannot create new delete request: %v", err)

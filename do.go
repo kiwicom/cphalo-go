@@ -7,11 +7,11 @@ import (
 	"net/http"
 )
 
-func (c *client) Do(req *http.Request, v interface{}) (*http.Response, error) {
+func (c *Client) Do(req *http.Request, v interface{}) (*http.Response, error) {
 	return c.doTries(req, v, 0)
 }
 
-func (c *client) doTries(req *http.Request, v interface{}, tries int) (*http.Response, error) {
+func (c *Client) doTries(req *http.Request, v interface{}, tries int) (*http.Response, error) {
 	if tries >= c.maxAuthTries {
 		return nil, fmt.Errorf("max tries exceeded")
 	}

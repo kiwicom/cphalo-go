@@ -29,7 +29,7 @@ type CreateFirewallPolicyResponse = GetFirewallPolicyResponse
 type CreateFirewallPolicyRequest = GetFirewallPolicyResponse
 type UpdateFirewallPolicyRequest = GetFirewallPolicyResponse
 
-func (c *client) ListFirewallPolicies() (response ListFirewallPoliciesResponse, err error) {
+func (c *Client) ListFirewallPolicies() (response ListFirewallPoliciesResponse, err error) {
 	req, err := c.newRequest(http.MethodGet, "firewall_policies", nil, nil)
 	if err != nil {
 		return response, fmt.Errorf("cannot create new request: %v", err)
@@ -43,7 +43,7 @@ func (c *client) ListFirewallPolicies() (response ListFirewallPoliciesResponse, 
 	return response, nil
 }
 
-func (c *client) GetFirewallPolicy(ID string) (response GetFirewallPolicyResponse, err error) {
+func (c *Client) GetFirewallPolicy(ID string) (response GetFirewallPolicyResponse, err error) {
 	req, err := c.newRequest(http.MethodGet, "firewall_policies/"+ID, nil, nil)
 	if err != nil {
 		return response, fmt.Errorf("cannot create new request: %v", err)
@@ -57,7 +57,7 @@ func (c *client) GetFirewallPolicy(ID string) (response GetFirewallPolicyRespons
 	return response, nil
 }
 
-func (c *client) CreateFirewallPolicy(policy FirewallPolicy) (response CreateFirewallPolicyResponse, err error) {
+func (c *Client) CreateFirewallPolicy(policy FirewallPolicy) (response CreateFirewallPolicyResponse, err error) {
 	req, err := c.newRequest(http.MethodPost, "firewall_policies", nil, CreateFirewallPolicyRequest{Policy: policy})
 	if err != nil {
 		return response, fmt.Errorf("cannot create new create request: %v", err)
@@ -71,7 +71,7 @@ func (c *client) CreateFirewallPolicy(policy FirewallPolicy) (response CreateFir
 	return response, nil
 }
 
-func (c *client) UpdateFirewallPolicy(policy FirewallPolicy) error {
+func (c *Client) UpdateFirewallPolicy(policy FirewallPolicy) error {
 	req, err := c.newRequest(http.MethodPut, "firewall_policies/"+policy.ID, nil, UpdateFirewallPolicyRequest{Policy: policy})
 	if err != nil {
 		return fmt.Errorf("cannot create new update request: %v", err)
@@ -85,7 +85,7 @@ func (c *client) UpdateFirewallPolicy(policy FirewallPolicy) error {
 	return nil
 }
 
-func (c *client) DeleteFirewallPolicy(ID string) error {
+func (c *Client) DeleteFirewallPolicy(ID string) error {
 	req, err := c.newRequest(http.MethodDelete, "firewall_policies/"+ID, nil, nil)
 	if err != nil {
 		return fmt.Errorf("cannot create new delete request: %v", err)

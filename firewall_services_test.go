@@ -24,7 +24,7 @@ func TestClient_ListFirewallServices(t *testing.T) {
 	defer ts.Close()
 
 	client := NewClient("", "")
-	client.baseUrl, err = url.Parse(ts.URL)
+	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
 		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
@@ -65,7 +65,7 @@ func TestClient_GetFirewallService(t *testing.T) {
 	defer ts.Close()
 
 	client := NewClient("", "")
-	client.baseUrl, err = url.Parse(ts.URL)
+	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
 		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
@@ -98,7 +98,7 @@ func TestClient_CreateFirewallService(t *testing.T) {
 	defer ts.Close()
 
 	client := NewClient("", "")
-	client.baseUrl, err = url.Parse(ts.URL)
+	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
 		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
@@ -155,7 +155,7 @@ func TestClient_UpdateFirewallService(t *testing.T) {
 	defer ts.Close()
 
 	client := NewClient("", "")
-	client.baseUrl, err = url.Parse(ts.URL)
+	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
 		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
@@ -206,7 +206,7 @@ func TestClient_DeleteFirewallService(t *testing.T) {
 	defer ts.Close()
 
 	client := NewClient("", "")
-	client.baseUrl, err = url.Parse(ts.URL)
+	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
 		t.Fatalf("cannot parse url %s: %v", ts.URL, err)

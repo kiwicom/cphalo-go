@@ -25,7 +25,7 @@ type CreateFirewallInterfaceResponse = GetFirewallInterfaceResponse
 type CreateFirewallInterfaceRequest = GetFirewallInterfaceResponse
 type UpdateFirewallInterfaceRequest = GetFirewallInterfaceResponse
 
-func (c *client) ListFirewallInterfaces() (response ListFirewallInterfacesResponse, err error) {
+func (c *Client) ListFirewallInterfaces() (response ListFirewallInterfacesResponse, err error) {
 	req, err := c.newRequest(http.MethodGet, "firewall_interfaces", nil, nil)
 	if err != nil {
 		return response, fmt.Errorf("cannot create new request: %v", err)
@@ -39,7 +39,7 @@ func (c *client) ListFirewallInterfaces() (response ListFirewallInterfacesRespon
 	return response, nil
 }
 
-func (c *client) GetFirewallInterface(ID string) (response GetFirewallInterfaceResponse, err error) {
+func (c *Client) GetFirewallInterface(ID string) (response GetFirewallInterfaceResponse, err error) {
 	req, err := c.newRequest(http.MethodGet, "firewall_interfaces/"+ID, nil, nil)
 	if err != nil {
 		return response, fmt.Errorf("cannot create new request: %v", err)
@@ -53,7 +53,7 @@ func (c *client) GetFirewallInterface(ID string) (response GetFirewallInterfaceR
 	return response, nil
 }
 
-func (c *client) CreateFirewallInterface(fwInterface FirewallInterface) (response CreateFirewallInterfaceResponse, err error) {
+func (c *Client) CreateFirewallInterface(fwInterface FirewallInterface) (response CreateFirewallInterfaceResponse, err error) {
 	req, err := c.newRequest(http.MethodPost, "firewall_interfaces", nil, CreateFirewallInterfaceRequest{Interface: fwInterface})
 	if err != nil {
 		return response, fmt.Errorf("cannot create new create request: %v", err)
@@ -67,7 +67,7 @@ func (c *client) CreateFirewallInterface(fwInterface FirewallInterface) (respons
 	return response, nil
 }
 
-func (c *client) UpdateFirewallInterface(fwInterface FirewallInterface) error {
+func (c *Client) UpdateFirewallInterface(fwInterface FirewallInterface) error {
 	req, err := c.newRequest(http.MethodPut, "firewall_interfaces/"+fwInterface.ID, nil, UpdateFirewallInterfaceRequest{Interface: fwInterface})
 	if err != nil {
 		return fmt.Errorf("cannot create new update request: %v", err)
@@ -81,7 +81,7 @@ func (c *client) UpdateFirewallInterface(fwInterface FirewallInterface) error {
 	return nil
 }
 
-func (c *client) DeleteFirewallInterface(ID string) error {
+func (c *Client) DeleteFirewallInterface(ID string) error {
 	req, err := c.newRequest(http.MethodDelete, "firewall_interfaces/"+ID, nil, nil)
 	if err != nil {
 		return fmt.Errorf("cannot create new delete request: %v", err)

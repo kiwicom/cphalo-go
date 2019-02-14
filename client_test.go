@@ -15,7 +15,7 @@ func TestNewClient(t *testing.T) {
 	client := NewClient(appKey, appSecret)
 
 	if client == nil {
-		t.Fatal("new client returned nil")
+		t.Fatal("new Client returned nil")
 	}
 
 	if client.appKey != appKey {
@@ -24,8 +24,8 @@ func TestNewClient(t *testing.T) {
 	if client.appSecret != appSecret {
 		t.Errorf("expected app secret %s; got %s", appSecret, client.appSecret)
 	}
-	if client.baseUrl.String() != DefaultBaseUrl {
-		t.Errorf("expected base url %s; got %s", DefaultBaseUrl, client.baseUrl.String())
+	if client.baseURL.String() != DefaultBaseURL {
+		t.Errorf("expected base url %s; got %s", DefaultBaseURL, client.baseURL.String())
 	}
 	if client.timeout != DefaultTimeout {
 		t.Errorf("expected timeout %s; got %s", DefaultTimeout, client.timeout)
@@ -34,10 +34,10 @@ func TestNewClient(t *testing.T) {
 		t.Errorf("expected max auth tries %d; got %d", DefaultMaxAuthTries, client.maxAuthTries)
 	}
 	if client.client == nil {
-		t.Fatal("http client not set")
+		t.Fatal("http Client not set")
 	}
 	if client.client.Timeout != DefaultTimeout {
-		t.Errorf("expected client timeout %s; got %s", DefaultTimeout, client.client.Timeout)
+		t.Errorf("expected Client timeout %s; got %s", DefaultTimeout, client.client.Timeout)
 	}
 }
 

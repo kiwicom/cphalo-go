@@ -12,27 +12,27 @@ import (
 const (
 	DefaultTimeout      = 10 * time.Second
 	DefaultMaxAuthTries = 3
-	DefaultBaseUrl      = "https://api.cloudpassage.com"
-	DefaultApiVersion   = "v1"
+	DefaultBaseURL      = "https://api.cloudpassage.com"
+	DefaultAPIVersion   = "v1"
 )
 
-type client struct {
+type Client struct {
 	appKey       string
 	appSecret    string
 	accessToken  string
-	baseUrl      *url.URL
+	baseURL      *url.URL
 	timeout      time.Duration
 	maxAuthTries int
 
 	client *http.Client
 }
 
-func NewClient(appKey string, appSecret string) *client {
-	baseUrl, _ := url.Parse(DefaultBaseUrl)
-	c := &client{
+func NewClient(appKey string, appSecret string) *Client {
+	baseURL, _ := url.Parse(DefaultBaseURL)
+	c := &Client{
 		appKey:       appKey,
 		appSecret:    appSecret,
-		baseUrl:      baseUrl,
+		baseURL:      baseURL,
 		timeout:      DefaultTimeout,
 		maxAuthTries: DefaultMaxAuthTries,
 	}
@@ -41,9 +41,9 @@ func NewClient(appKey string, appSecret string) *client {
 	return c
 }
 
-func (c *client) newRequest(method string, rsc string, params map[string]string, body interface{}) (*http.Request, error) {
-	rawURL := c.baseUrl.String() + "/" + DefaultApiVersion + "/" + rsc
-	baseUrl, err := url.Parse(rawURL)
+func (c *Client) newRequest(method string, rsc string, params map[string]string, body interface{}) (*http.Request, error) {
+	rawURL := c.baseURL.String() + "/" + DefaultAPIVersion + "/" + rsc
+	baseURL, err := url.Parse(rawURL)
 
 	if err != nil {
 		return nil, fmt.Errorf("cannot parse url %s: %v", rawURL, err)
@@ -54,7 +54,7 @@ func (c *client) newRequest(method string, rsc string, params map[string]string,
 		for k, v := range params {
 			ps.Set(k, v)
 		}
-		baseUrl.RawQuery = ps.Encode()
+		baseURL.RawQuery = ps.Encode()
 	}
 
 	var requestBody []byte
@@ -66,7 +66,7 @@ func (c *client) newRequest(method string, rsc string, params map[string]string,
 		}
 	}
 
-	req, err := http.NewRequest(method, baseUrl.String(), bytes.NewBuffer(requestBody))
+	req, err := http.NewRequest(method, baseURL.String(), bytes.NewBuffer(requestBody))
 	req.Header.Add("Content-Type", "application/json")
 
 	if err != nil {

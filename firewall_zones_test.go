@@ -24,7 +24,7 @@ func TestClient_ListFirewallZones(t *testing.T) {
 	defer ts.Close()
 
 	client := NewClient("", "")
-	client.baseUrl, err = url.Parse(ts.URL)
+	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
 		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
@@ -65,7 +65,7 @@ func TestClient_GetFirewallZone(t *testing.T) {
 	defer ts.Close()
 
 	client := NewClient("", "")
-	client.baseUrl, err = url.Parse(ts.URL)
+	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
 		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
@@ -98,7 +98,7 @@ func TestClient_CreateFirewallZone(t *testing.T) {
 	defer ts.Close()
 
 	client := NewClient("", "")
-	client.baseUrl, err = url.Parse(ts.URL)
+	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
 		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
@@ -107,7 +107,7 @@ func TestClient_CreateFirewallZone(t *testing.T) {
 	service := FirewallZone{
 		ID:        "id",
 		Name:      "hello",
-		IpAddress: "0.0.0.0/0",
+		IPAddress: "0.0.0.0/0",
 	}
 
 	resp, err := client.CreateFirewallZone(service)
@@ -129,8 +129,8 @@ func TestClient_CreateFirewallZone(t *testing.T) {
 		t.Errorf("expected request to contain Name=%s; got %s", service.Name, reqBody.Zone.Name)
 	}
 
-	if reqBody.Zone.IpAddress != service.IpAddress {
-		t.Errorf("expected request to contain IpAddress=%s; got %s", service.IpAddress, reqBody.Zone.IpAddress)
+	if reqBody.Zone.IPAddress != service.IPAddress {
+		t.Errorf("expected request to contain IPAddress=%s; got %s", service.IPAddress, reqBody.Zone.IPAddress)
 	}
 }
 
@@ -150,7 +150,7 @@ func TestClient_UpdateFirewallZone(t *testing.T) {
 	defer ts.Close()
 
 	client := NewClient("", "")
-	client.baseUrl, err = url.Parse(ts.URL)
+	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
 		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
@@ -159,7 +159,7 @@ func TestClient_UpdateFirewallZone(t *testing.T) {
 	service := FirewallZone{
 		ID:        "id",
 		Name:      "hello",
-		IpAddress: "0.0.0.0/0",
+		IPAddress: "0.0.0.0/0",
 	}
 
 	err = client.UpdateFirewallZone(service)
@@ -176,8 +176,8 @@ func TestClient_UpdateFirewallZone(t *testing.T) {
 		t.Errorf("expected request to contain Name=%s; got %s", service.Name, reqBody.Zone.Name)
 	}
 
-	if reqBody.Zone.IpAddress != service.IpAddress {
-		t.Errorf("expected request to contain IpAddress=%s; got %s", service.IpAddress, reqBody.Zone.IpAddress)
+	if reqBody.Zone.IPAddress != service.IPAddress {
+		t.Errorf("expected request to contain IPAddress=%s; got %s", service.IPAddress, reqBody.Zone.IPAddress)
 	}
 }
 
@@ -196,7 +196,7 @@ func TestClient_DeleteFirewallZone(t *testing.T) {
 	defer ts.Close()
 
 	client := NewClient("", "")
-	client.baseUrl, err = url.Parse(ts.URL)
+	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
 		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
