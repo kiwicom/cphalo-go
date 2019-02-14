@@ -31,6 +31,11 @@ func (c *Client) RenewAccessToken() error {
 	encodedAuthString := base64.StdEncoding.EncodeToString([]byte(authString))
 
 	req, err := http.NewRequest(http.MethodPost, baseUrl.String(), nil)
+
+	if err != nil {
+		return fmt.Errorf("failed to create request: %v", err)
+	}
+
 	req.Header.Add("Authorization", "Basic "+encodedAuthString)
 
 	resp, err := c.client.Do(req)
