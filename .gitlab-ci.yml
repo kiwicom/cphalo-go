@@ -1,0 +1,30 @@
+image: golang:latest
+
+stages:
+  - test
+
+tests:
+  stage: test
+  script:
+    - go test -v -cover .
+
+tests-alpine:
+  image: golang:alpine
+  stage: test
+  variables:
+    CGO_ENABLED: "0"
+  script:
+    - go test .
+
+linting:
+  stage: test
+  image: golangci/golangci-lint
+  script:
+    - golangci-lint run
+
+golint:
+  stage: test
+  allow_failure: true
+  script:
+    - go get golang.org/x/lint/golint
+    - golint -set_exit_status
