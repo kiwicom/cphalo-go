@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 )
 
@@ -13,14 +12,12 @@ func (c *Client) Do(req *http.Request, v interface{}) (*http.Response, error) {
 }
 
 func (c *Client) doTries(req *http.Request, v interface{}, tries int) (*http.Response, error) {
-	log.Printf("making %s request to: %s", req.Method, req.URL.String())
 	if tries >= c.MaxAuthTries {
 		return nil, fmt.Errorf("max tries exceeded")
 	}
 
 	if len(c.AccessToken) == 0 {
 		tries = tries + 1
-		log.Println("access token not set")
 		if err := c.RenewAccessToken(); err != nil {
 			return nil, fmt.Errorf("cannot set access token: %v", err)
 		}
@@ -38,7 +35,6 @@ func (c *Client) doTries(req *http.Request, v interface{}, tries int) (*http.Res
 	// https://library.cloudpassage.com/help/cloudpassage-api-documentation#token-management
 	// the docs say 402, but in reality only 401 is used
 	if resp.StatusCode == http.StatusPaymentRequired || resp.StatusCode == http.StatusUnauthorized {
-		log.Println("access token expired")
 		if err := c.RenewAccessToken(); err != nil {
 			return nil, fmt.Errorf("cannot renew access token: %v", err)
 		}
@@ -90,8 +86,6 @@ func validateResponse(r *http.Response) error {
 		return nil
 	}
 
-	log.Println("processing error response, error code: ", r.StatusCode)
-
 	var customErr CPHaloResponseError
 
 	switch r.StatusCode / 100 {
@@ -121,9 +115,6 @@ func validateResponse(r *http.Response) error {
 	if len(bodyBytes) == 0 {
 		return customErr
 	}
-
-	bodyString := string(bodyBytes)
-	log.Println("response body: ", bodyString)
 
 	if err := json.Unmarshal(bodyBytes, &customErr); err != nil {
 		return fmt.Errorf("cannot unmarshall error response: %v", err)

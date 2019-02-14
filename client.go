@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"net/url"
 	"time"
@@ -65,8 +64,6 @@ func (c *Client) NewRequest(method string, rsc string, params map[string]string,
 		if err != nil {
 			return nil, fmt.Errorf("cannot marshall request body: %v", err)
 		}
-
-		log.Println("request body: ", string(requestBody))
 	}
 
 	req, err := http.NewRequest(method, baseUrl.String(), bytes.NewBuffer(requestBody))
