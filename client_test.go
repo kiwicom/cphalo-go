@@ -18,20 +18,20 @@ func TestNewClient(t *testing.T) {
 		t.Fatal("new client returned nil")
 	}
 
-	if client.AppKey != appKey {
-		t.Errorf("expected app key %s; got %s", appKey, client.AppKey)
+	if client.appKey != appKey {
+		t.Errorf("expected app key %s; got %s", appKey, client.appKey)
 	}
-	if client.AppSecret != appSecret {
-		t.Errorf("expected app secret %s; got %s", appSecret, client.AppSecret)
+	if client.appSecret != appSecret {
+		t.Errorf("expected app secret %s; got %s", appSecret, client.appSecret)
 	}
-	if client.BaseUrl.String() != DefaultBaseUrl {
-		t.Errorf("expected base url %s; got %s", DefaultBaseUrl, client.BaseUrl.String())
+	if client.baseUrl.String() != DefaultBaseUrl {
+		t.Errorf("expected base url %s; got %s", DefaultBaseUrl, client.baseUrl.String())
 	}
-	if client.Timeout != DefaultTimeout {
-		t.Errorf("expected timeout %s; got %s", DefaultTimeout, client.Timeout)
+	if client.timeout != DefaultTimeout {
+		t.Errorf("expected timeout %s; got %s", DefaultTimeout, client.timeout)
 	}
-	if client.MaxAuthTries != DefaultMaxAuthTries {
-		t.Errorf("expected max auth tries %d; got %d", DefaultMaxAuthTries, client.MaxAuthTries)
+	if client.maxAuthTries != DefaultMaxAuthTries {
+		t.Errorf("expected max auth tries %d; got %d", DefaultMaxAuthTries, client.maxAuthTries)
 	}
 	if client.client == nil {
 		t.Fatal("http client not set")

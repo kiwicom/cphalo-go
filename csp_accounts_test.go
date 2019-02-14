@@ -24,7 +24,7 @@ func TestClient_ListCSPAccounts(t *testing.T) {
 	defer ts.Close()
 
 	client := NewClient("", "")
-	client.BaseUrl, err = url.Parse(ts.URL)
+	client.baseUrl, err = url.Parse(ts.URL)
 
 	if err != nil {
 		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
@@ -64,7 +64,7 @@ func TestClient_GetCSPAccounts(t *testing.T) {
 	defer ts.Close()
 
 	client := NewClient("", "")
-	client.BaseUrl, err = url.Parse(ts.URL)
+	client.baseUrl, err = url.Parse(ts.URL)
 
 	if err != nil {
 		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
@@ -98,7 +98,7 @@ func TestClient_CreateCSPAccount(t *testing.T) {
 	defer ts.Close()
 
 	client := NewClient("", "")
-	client.BaseUrl, err = url.Parse(ts.URL)
+	client.baseUrl, err = url.Parse(ts.URL)
 
 	if err != nil {
 		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
@@ -146,7 +146,7 @@ func TestClient_UpdateCSPAccount(t *testing.T) {
 	defer ts.Close()
 
 	client := NewClient("", "")
-	client.BaseUrl, err = url.Parse(ts.URL)
+	client.baseUrl, err = url.Parse(ts.URL)
 
 	if err != nil {
 		t.Fatalf("cannot parse url %s: %v", ts.URL, err)
@@ -190,7 +190,7 @@ func TestClient_DeleteCSPAccount(t *testing.T) {
 	defer ts.Close()
 
 	client := NewClient("", "")
-	client.BaseUrl, err = url.Parse(ts.URL)
+	client.baseUrl, err = url.Parse(ts.URL)
 
 	if err != nil {
 		t.Fatalf("cannot parse url %s: %v", ts.URL, err)

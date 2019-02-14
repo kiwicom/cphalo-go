@@ -29,8 +29,8 @@ type ListAlertProfilesResponse struct {
 	AlertProfiles []AlertProfile `json:"alert_profiles"`
 }
 
-func (c *Client) ListAlertProfiles() (response ListAlertProfilesResponse, err error) {
-	req, err := c.NewRequest(http.MethodGet, "alert_profiles", nil, nil)
+func (c *client) ListAlertProfiles() (response ListAlertProfilesResponse, err error) {
+	req, err := c.newRequest(http.MethodGet, "alert_profiles", nil, nil)
 	if err != nil {
 		return response, fmt.Errorf("cannot create new request: %v", err)
 	}

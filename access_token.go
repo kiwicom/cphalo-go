@@ -15,16 +15,16 @@ type accessTokenResponse struct {
 	ExpiresIn   int    `json:"expires_in"`
 }
 
-func (c *Client) RenewAccessToken() error {
+func (c *client) renewAccessToken() error {
 	rsc := "/oauth/access_token?grant_type=client_credentials"
-	rawURL := c.BaseUrl.String() + rsc
+	rawURL := c.baseUrl.String() + rsc
 	baseUrl, err := url.Parse(rawURL)
 
 	if err != nil {
 		return fmt.Errorf("cannot parse url %s: %v", rawURL, err)
 	}
 
-	authString := c.AppKey + ":" + c.AppSecret
+	authString := c.appKey + ":" + c.appSecret
 	encodedAuthString := base64.StdEncoding.EncodeToString([]byte(authString))
 
 	req, err := http.NewRequest(http.MethodPost, baseUrl.String(), nil)
@@ -63,7 +63,7 @@ func (c *Client) RenewAccessToken() error {
 		return fmt.Errorf("unmarshalling failed: %v", err)
 	}
 
-	c.AccessToken = m.AccessToken
+	c.accessToken = m.AccessToken
 
 	return nil
 }

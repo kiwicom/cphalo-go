@@ -88,9 +88,9 @@ func (r *FirewallRule) applyCorrections() {
 	}
 }
 
-func (c *Client) ListFirewallRules(policyID string) (response ListFirewallRulesResponse, err error) {
+func (c *client) ListFirewallRules(policyID string) (response ListFirewallRulesResponse, err error) {
 	url := fmt.Sprintf("firewall_policies/%s/firewall_rules", policyID)
-	req, err := c.NewRequest(http.MethodGet, url, nil, nil)
+	req, err := c.newRequest(http.MethodGet, url, nil, nil)
 	if err != nil {
 		return response, fmt.Errorf("cannot create new request: %v", err)
 	}
@@ -109,9 +109,9 @@ func (c *Client) ListFirewallRules(policyID string) (response ListFirewallRulesR
 	return response, nil
 }
 
-func (c *Client) GetFirewallRule(policyID, ruleID string) (response GetFirewallRuleResponse, err error) {
+func (c *client) GetFirewallRule(policyID, ruleID string) (response GetFirewallRuleResponse, err error) {
 	url := fmt.Sprintf("firewall_policies/%s/firewall_rules/%s", policyID, ruleID)
-	req, err := c.NewRequest(http.MethodGet, url, nil, nil)
+	req, err := c.newRequest(http.MethodGet, url, nil, nil)
 	if err != nil {
 		return response, fmt.Errorf("cannot create new request: %v", err)
 	}
@@ -128,10 +128,10 @@ func (c *Client) GetFirewallRule(policyID, ruleID string) (response GetFirewallR
 	return response, nil
 }
 
-func (c *Client) CreateFirewallRule(policyID string, rule FirewallRule) (response CreateFirewallRuleResponse, err error) {
+func (c *client) CreateFirewallRule(policyID string, rule FirewallRule) (response CreateFirewallRuleResponse, err error) {
 	url := fmt.Sprintf("firewall_policies/%s/firewall_rules", policyID)
 	rule.applyCorrections()
-	req, err := c.NewRequest(http.MethodPost, url, nil, CreateFirewallRuleRequest{Rule: rule})
+	req, err := c.newRequest(http.MethodPost, url, nil, CreateFirewallRuleRequest{Rule: rule})
 	if err != nil {
 		return response, fmt.Errorf("cannot create new create request: %v", err)
 	}
@@ -144,10 +144,10 @@ func (c *Client) CreateFirewallRule(policyID string, rule FirewallRule) (respons
 	return response, nil
 }
 
-func (c *Client) UpdateFirewallRule(policyID string, rule FirewallRule) error {
+func (c *client) UpdateFirewallRule(policyID string, rule FirewallRule) error {
 	url := fmt.Sprintf("firewall_policies/%s/firewall_rules/%s", policyID, rule.ID)
 	rule.applyCorrections()
-	req, err := c.NewRequest(http.MethodPut, url, nil, UpdateFirewallRuleRequest{Rule: rule})
+	req, err := c.newRequest(http.MethodPut, url, nil, UpdateFirewallRuleRequest{Rule: rule})
 	if err != nil {
 		return fmt.Errorf("cannot create new update request: %v", err)
 	}
@@ -160,9 +160,9 @@ func (c *Client) UpdateFirewallRule(policyID string, rule FirewallRule) error {
 	return nil
 }
 
-func (c *Client) DeleteFirewallRule(policyID, ruleID string) error {
+func (c *client) DeleteFirewallRule(policyID, ruleID string) error {
 	url := fmt.Sprintf("firewall_policies/%s/firewall_rules/%s", policyID, ruleID)
-	req, err := c.NewRequest(http.MethodDelete, url, nil, nil)
+	req, err := c.newRequest(http.MethodDelete, url, nil, nil)
 	if err != nil {
 		return fmt.Errorf("cannot create new delete request: %v", err)
 	}

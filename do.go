@@ -7,23 +7,23 @@ import (
 	"net/http"
 )
 
-func (c *Client) Do(req *http.Request, v interface{}) (*http.Response, error) {
+func (c *client) Do(req *http.Request, v interface{}) (*http.Response, error) {
 	return c.doTries(req, v, 0)
 }
 
-func (c *Client) doTries(req *http.Request, v interface{}, tries int) (*http.Response, error) {
-	if tries >= c.MaxAuthTries {
+func (c *client) doTries(req *http.Request, v interface{}, tries int) (*http.Response, error) {
+	if tries >= c.maxAuthTries {
 		return nil, fmt.Errorf("max tries exceeded")
 	}
 
-	if len(c.AccessToken) == 0 {
+	if len(c.accessToken) == 0 {
 		tries = tries + 1
-		if err := c.RenewAccessToken(); err != nil {
+		if err := c.renewAccessToken(); err != nil {
 			return nil, fmt.Errorf("cannot set access token: %v", err)
 		}
 	}
 
-	req.Header.Set("Authorization", "Bearer "+c.AccessToken)
+	req.Header.Set("Authorization", "Bearer "+c.accessToken)
 
 	resp, err := c.client.Do(req)
 	if err != nil {
@@ -35,7 +35,7 @@ func (c *Client) doTries(req *http.Request, v interface{}, tries int) (*http.Res
 	// https://library.cloudpassage.com/help/cloudpassage-api-documentation#token-management
 	// the docs say 402, but in reality only 401 is used
 	if resp.StatusCode == http.StatusPaymentRequired || resp.StatusCode == http.StatusUnauthorized {
-		if err := c.RenewAccessToken(); err != nil {
+		if err := c.renewAccessToken(); err != nil {
 			return nil, fmt.Errorf("cannot renew access token: %v", err)
 		}
 

@@ -16,33 +16,33 @@ const (
 	DefaultApiVersion   = "v1"
 )
 
-type Client struct {
-	AppKey       string
-	AppSecret    string
-	AccessToken  string
-	BaseUrl      *url.URL
-	Timeout      time.Duration
-	MaxAuthTries int
+type client struct {
+	appKey       string
+	appSecret    string
+	accessToken  string
+	baseUrl      *url.URL
+	timeout      time.Duration
+	maxAuthTries int
 
 	client *http.Client
 }
 
-func NewClient(appKey string, appSecret string) *Client {
+func NewClient(appKey string, appSecret string) *client {
 	baseUrl, _ := url.Parse(DefaultBaseUrl)
-	c := &Client{
-		AppKey:       appKey,
-		AppSecret:    appSecret,
-		BaseUrl:      baseUrl,
-		Timeout:      DefaultTimeout,
-		MaxAuthTries: DefaultMaxAuthTries,
+	c := &client{
+		appKey:       appKey,
+		appSecret:    appSecret,
+		baseUrl:      baseUrl,
+		timeout:      DefaultTimeout,
+		maxAuthTries: DefaultMaxAuthTries,
 	}
-	c.client = &http.Client{Timeout: c.Timeout}
+	c.client = &http.Client{Timeout: c.timeout}
 
 	return c
 }
 
-func (c *Client) NewRequest(method string, rsc string, params map[string]string, body interface{}) (*http.Request, error) {
-	rawURL := c.BaseUrl.String() + "/" + DefaultApiVersion + "/" + rsc
+func (c *client) newRequest(method string, rsc string, params map[string]string, body interface{}) (*http.Request, error) {
+	rawURL := c.baseUrl.String() + "/" + DefaultApiVersion + "/" + rsc
 	baseUrl, err := url.Parse(rawURL)
 
 	if err != nil {

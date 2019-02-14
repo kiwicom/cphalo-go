@@ -24,7 +24,7 @@ func TestClient_ListAlertProfiles(t *testing.T) {
 	defer ts.Close()
 
 	client := NewClient("", "")
-	client.BaseUrl, err = url.Parse(ts.URL)
+	client.baseUrl, err = url.Parse(ts.URL)
 
 	if err != nil {
 		t.Fatalf("cannot parse url %s: %v", ts.URL, err)

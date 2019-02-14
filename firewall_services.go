@@ -27,8 +27,8 @@ type CreateFirewallServiceResponse = GetFirewallServiceResponse
 type CreateFirewallServiceRequest = GetFirewallServiceResponse
 type UpdateFirewallServiceRequest = GetFirewallServiceResponse
 
-func (c *Client) ListFirewallServices() (response ListFirewallServicesResponse, err error) {
-	req, err := c.NewRequest(http.MethodGet, "firewall_services", nil, nil)
+func (c *client) ListFirewallServices() (response ListFirewallServicesResponse, err error) {
+	req, err := c.newRequest(http.MethodGet, "firewall_services", nil, nil)
 	if err != nil {
 		return response, fmt.Errorf("cannot create new request: %v", err)
 	}
@@ -41,8 +41,8 @@ func (c *Client) ListFirewallServices() (response ListFirewallServicesResponse, 
 	return response, nil
 }
 
-func (c *Client) GetFirewallService(ID string) (response GetFirewallServiceResponse, err error) {
-	req, err := c.NewRequest(http.MethodGet, "firewall_services/"+ID, nil, nil)
+func (c *client) GetFirewallService(ID string) (response GetFirewallServiceResponse, err error) {
+	req, err := c.newRequest(http.MethodGet, "firewall_services/"+ID, nil, nil)
 	if err != nil {
 		return response, fmt.Errorf("cannot create new request: %v", err)
 	}
@@ -55,8 +55,8 @@ func (c *Client) GetFirewallService(ID string) (response GetFirewallServiceRespo
 	return response, nil
 }
 
-func (c *Client) CreateFirewallService(service FirewallService) (response CreateFirewallServiceResponse, err error) {
-	req, err := c.NewRequest(http.MethodPost, "firewall_services", nil, CreateFirewallServiceRequest{Service: service})
+func (c *client) CreateFirewallService(service FirewallService) (response CreateFirewallServiceResponse, err error) {
+	req, err := c.newRequest(http.MethodPost, "firewall_services", nil, CreateFirewallServiceRequest{Service: service})
 	if err != nil {
 		return response, fmt.Errorf("cannot create new create request: %v", err)
 	}
@@ -69,8 +69,8 @@ func (c *Client) CreateFirewallService(service FirewallService) (response Create
 	return response, nil
 }
 
-func (c *Client) UpdateFirewallService(service FirewallService) error {
-	req, err := c.NewRequest(http.MethodPut, "firewall_services/"+service.ID, nil, UpdateFirewallServiceRequest{Service: service})
+func (c *client) UpdateFirewallService(service FirewallService) error {
+	req, err := c.newRequest(http.MethodPut, "firewall_services/"+service.ID, nil, UpdateFirewallServiceRequest{Service: service})
 	if err != nil {
 		return fmt.Errorf("cannot create new update request: %v", err)
 	}
@@ -83,8 +83,8 @@ func (c *Client) UpdateFirewallService(service FirewallService) error {
 	return nil
 }
 
-func (c *Client) DeleteFirewallService(ID string) error {
-	req, err := c.NewRequest(http.MethodDelete, "firewall_services/"+ID, nil, nil)
+func (c *client) DeleteFirewallService(ID string) error {
+	req, err := c.newRequest(http.MethodDelete, "firewall_services/"+ID, nil, nil)
 	if err != nil {
 		return fmt.Errorf("cannot create new delete request: %v", err)
 	}

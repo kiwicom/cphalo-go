@@ -53,8 +53,8 @@ type MoveServerRequest struct {
 	} `json:"server"`
 }
 
-func (c *Client) ListServers() (response ListServersResponse, err error) {
-	req, err := c.NewRequest(http.MethodGet, "servers", nil, nil)
+func (c *client) ListServers() (response ListServersResponse, err error) {
+	req, err := c.newRequest(http.MethodGet, "servers", nil, nil)
 	if err != nil {
 		return response, fmt.Errorf("cannot create new request: %v", err)
 	}
@@ -67,8 +67,8 @@ func (c *Client) ListServers() (response ListServersResponse, err error) {
 	return response, nil
 }
 
-func (c *Client) GetServer(ID string) (response GetServersResponse, err error) {
-	req, err := c.NewRequest(http.MethodGet, "servers/"+ID, nil, nil)
+func (c *client) GetServer(ID string) (response GetServersResponse, err error) {
+	req, err := c.newRequest(http.MethodGet, "servers/"+ID, nil, nil)
 	if err != nil {
 		return response, fmt.Errorf("cannot create new request: %v", err)
 	}
@@ -81,11 +81,11 @@ func (c *Client) GetServer(ID string) (response GetServersResponse, err error) {
 	return response, nil
 }
 
-func (c *Client) MoveServer(ID, gID string) error {
+func (c *client) MoveServer(ID, gID string) error {
 	reqData := MoveServerRequest{}
 	reqData.Server.GroupID = gID
 
-	req, err := c.NewRequest(http.MethodPut, "servers/"+ID, nil, reqData)
+	req, err := c.newRequest(http.MethodPut, "servers/"+ID, nil, reqData)
 	if err != nil {
 		return fmt.Errorf("cannot create new move request: %v", err)
 	}
@@ -98,8 +98,8 @@ func (c *Client) MoveServer(ID, gID string) error {
 	return nil
 }
 
-func (c *Client) DeleteServer(ID string) error {
-	req, err := c.NewRequest(http.MethodDelete, "servers/"+ID, nil, nil)
+func (c *client) DeleteServer(ID string) error {
+	req, err := c.newRequest(http.MethodDelete, "servers/"+ID, nil, nil)
 	if err != nil {
 		return fmt.Errorf("cannot create new delete request: %v", err)
 	}
@@ -112,11 +112,11 @@ func (c *Client) DeleteServer(ID string) error {
 	return nil
 }
 
-func (c *Client) RetireServer(ID string) error {
+func (c *client) RetireServer(ID string) error {
 	reqData := RetireServerRequest{}
 	reqData.Server.Retire = true
 
-	req, err := c.NewRequest(http.MethodPut, "servers/"+ID, nil, reqData)
+	req, err := c.newRequest(http.MethodPut, "servers/"+ID, nil, reqData)
 	if err != nil {
 		return fmt.Errorf("cannot create new retire request: %v", err)
 	}
