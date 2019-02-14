@@ -92,8 +92,8 @@ func (e ResponseError429) GetStatusCode() int {
 }
 
 type ResponseError500 struct {
-	StatusCode int    `json:"code"`
 	Message    string `json:"message"`
+	StatusCode int    `json:"code"`
 }
 
 func (e ResponseError500) Error() string {
