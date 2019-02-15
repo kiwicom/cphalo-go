@@ -5,6 +5,7 @@ import (
 	"net/http"
 )
 
+// FirewallRuleSourceTarget represent a CPHalo firewall source and target.
 type FirewallRuleSourceTarget struct {
 	ID        string `json:"id,omitempty"`
 	Name      string `json:"name,omitempty"`
@@ -12,6 +13,7 @@ type FirewallRuleSourceTarget struct {
 	Kind      string `json:"type,omitempty"`
 }
 
+// GetID returns ID if exists, otherwise Name
 func (f *FirewallRuleSourceTarget) GetID() string {
 	if f.ID == "" {
 		return f.Name
@@ -20,6 +22,9 @@ func (f *FirewallRuleSourceTarget) GetID() string {
 	return f.ID
 }
 
+// FirewallRule represent a CPHalo firewall rule.
+//
+// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#object-representation-7
 type FirewallRule struct {
 	ID                string                    `json:"id,omitempty"`
 	URL               string                    `json:"url,omitempty"`
@@ -34,17 +39,24 @@ type FirewallRule struct {
 	FirewallTarget    *FirewallRuleSourceTarget `json:"firewall_target,omitempty"`
 }
 
+// ListFirewallRulesResponse represent a list of firewall rules response.
 type ListFirewallRulesResponse struct {
 	Count int            `json:"count"`
 	Rules []FirewallRule `json:"firewall_rules"`
 }
 
+// GetFirewallRuleResponse represent a get firewall rule response.
 type GetFirewallRuleResponse struct {
 	Rule FirewallRule `json:"firewall_rule"`
 }
 
+// CreateFirewallRuleResponse represent a create firewall rule response.
 type CreateFirewallRuleResponse = GetFirewallRuleResponse
+
+// CreateFirewallRuleRequest represent a create firewall rule request.
 type CreateFirewallRuleRequest = GetFirewallRuleResponse
+
+// UpdateFirewallRuleRequest represent a create firewall rule request.
 type UpdateFirewallRuleRequest = GetFirewallRuleResponse
 
 func (r *FirewallRule) applyCorrections() {
@@ -88,6 +100,9 @@ func (r *FirewallRule) applyCorrections() {
 	}
 }
 
+// ListFirewallRules lists all firewall rules.
+//
+// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#list-firewall-rules-in-firewall-policy
 func (c *Client) ListFirewallRules(policyID string) (response ListFirewallRulesResponse, err error) {
 	url := fmt.Sprintf("firewall_policies/%s/firewall_rules", policyID)
 	req, err := c.newRequest(http.MethodGet, url, nil, nil)
@@ -109,6 +124,9 @@ func (c *Client) ListFirewallRules(policyID string) (response ListFirewallRulesR
 	return response, nil
 }
 
+// GetFirewallRule returns details of the firewall rule.
+//
+// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#get-firewall-rule-details
 func (c *Client) GetFirewallRule(policyID, ruleID string) (response GetFirewallRuleResponse, err error) {
 	url := fmt.Sprintf("firewall_policies/%s/firewall_rules/%s", policyID, ruleID)
 	req, err := c.newRequest(http.MethodGet, url, nil, nil)
@@ -128,6 +146,9 @@ func (c *Client) GetFirewallRule(policyID, ruleID string) (response GetFirewallR
 	return response, nil
 }
 
+// CreateFirewallRule creates a new firewall rule.
+//
+// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#add-new-firewall-rule-to-the-firewall-policy
 func (c *Client) CreateFirewallRule(policyID string, rule FirewallRule) (response CreateFirewallRuleResponse, err error) {
 	url := fmt.Sprintf("firewall_policies/%s/firewall_rules", policyID)
 	rule.applyCorrections()
@@ -144,6 +165,9 @@ func (c *Client) CreateFirewallRule(policyID string, rule FirewallRule) (respons
 	return response, nil
 }
 
+// UpdateFirewallRule updates firewall rule.
+//
+// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#update-firewall-rule
 func (c *Client) UpdateFirewallRule(policyID string, rule FirewallRule) error {
 	url := fmt.Sprintf("firewall_policies/%s/firewall_rules/%s", policyID, rule.ID)
 	rule.applyCorrections()
@@ -160,6 +184,9 @@ func (c *Client) UpdateFirewallRule(policyID string, rule FirewallRule) error {
 	return nil
 }
 
+// DeleteFirewallRule deletes a firewall rule.
+//
+// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#delete-firewall-rule
 func (c *Client) DeleteFirewallRule(policyID, ruleID string) error {
 	url := fmt.Sprintf("firewall_policies/%s/firewall_rules/%s", policyID, ruleID)
 	req, err := c.newRequest(http.MethodDelete, url, nil, nil)

@@ -10,12 +10,17 @@ import (
 )
 
 const (
-	DefaultTimeout      = 10 * time.Second
+	// DefaultTimeout for the client.
+	DefaultTimeout = 10 * time.Second
+	// DefaultMaxAuthTries determines how many times to try to auth before giving up.
 	DefaultMaxAuthTries = 3
-	DefaultBaseURL      = "https://api.cloudpassage.com"
-	DefaultAPIVersion   = "v1"
+	// DefaultBaseURL of the CPHalo API endpoint.
+	DefaultBaseURL = "https://api.cloudpassage.com"
+	// DefaultAPIVersion is the version of the CPHalo API endpoint.
+	DefaultAPIVersion = "v1"
 )
 
+// Client manages communication with CPHalo API.
 type Client struct {
 	appKey       string
 	appSecret    string
@@ -27,6 +32,7 @@ type Client struct {
 	client *http.Client
 }
 
+// NewClient creates a new CPHalo Client
 func NewClient(appKey string, appSecret string) *Client {
 	baseURL, _ := url.Parse(DefaultBaseURL)
 	c := &Client{

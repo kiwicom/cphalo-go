@@ -5,9 +5,10 @@ import (
 	"strings"
 )
 
-// NullableString is a string, which marshalls empty string into null and vice versa.
+// NullableString is a string, which marshals empty string into null and vice versa.
 type NullableString string
 
+// MarshalJSON is used by marshaler interface.
 func (s NullableString) MarshalJSON() ([]byte, error) {
 	var buf bytes.Buffer
 	if len(string(s)) == 0 {
@@ -19,6 +20,7 @@ func (s NullableString) MarshalJSON() ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
+// UnmarshalJSON is used by unmarshaler interface.
 func (s *NullableString) UnmarshalJSON(in []byte) error {
 	str := string(in)
 	if str == `null` {

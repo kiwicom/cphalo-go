@@ -6,6 +6,9 @@ import (
 	"time"
 )
 
+// AlertProfile represent a CPHalo alert profile.
+//
+// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#alert-profile-representation
 type AlertProfile struct {
 	ID          string    `json:"id"`
 	Name        string    `json:"name"`
@@ -24,11 +27,15 @@ type AlertProfile struct {
 	} `json:"used_by"`
 }
 
+// ListAlertProfilesResponse represent a CPHalo alert profile response.
 type ListAlertProfilesResponse struct {
 	Count         int            `json:"count"`
 	AlertProfiles []AlertProfile `json:"alert_profiles"`
 }
 
+// ListAlertProfiles lists all defined alert profiles.
+//
+// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#list-alert-profiles
 func (c *Client) ListAlertProfiles() (response ListAlertProfilesResponse, err error) {
 	req, err := c.newRequest(http.MethodGet, "alert_profiles", nil, nil)
 	if err != nil {

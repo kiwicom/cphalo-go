@@ -5,16 +5,9 @@ import (
 	"net/http"
 )
 
-type CreateCSPAccountAWSRequest struct {
-	ExternalID         string `json:"aws_external_id,omitempty"`
-	RoleArn            string `json:"aws_role_arn,omitempty"`
-	SnsArn             string `json:"aws_sns_arn,omitempty"`
-	GroupID            string `json:"group_id,omitempty"`
-	CSPAccountType     string `json:"csp_account_type,omitempty"`
-	CSPRegionType      string `json:"csp_region_type,omitempty"`
-	AccountDisplayName string `json:"account_display_name,omitempty"`
-}
-
+// CSPAccount represent a CPHalo CSP account.
+//
+// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#csp-accounts-object
 type CSPAccount struct {
 	ID                       string `json:"id"`
 	CSPAccountType           string `json:"csp_account_type,omitempty"`
@@ -54,17 +47,34 @@ type CSPAccount struct {
 	AwsSnsErrorDetail   string `json:"aws_sns_error_detail,omitempty"`
 }
 
+// ListCSPAccountsResponse represent a list of CSP accounts response.
 type ListCSPAccountsResponse struct {
 	Count       int          `json:"count"`
 	CSPAccounts []CSPAccount `json:"csp_accounts"`
 }
 
+// GetCSPAccountResponse represent a get CSP account response.
 type GetCSPAccountResponse struct {
 	CSPAccount CSPAccount `json:"csp_account"`
 }
 
+// CreateCSPAccountAWSRequest represent a create CSP account request.
+type CreateCSPAccountAWSRequest struct {
+	ExternalID         string `json:"aws_external_id,omitempty"`
+	RoleArn            string `json:"aws_role_arn,omitempty"`
+	SnsArn             string `json:"aws_sns_arn,omitempty"`
+	GroupID            string `json:"group_id,omitempty"`
+	CSPAccountType     string `json:"csp_account_type,omitempty"`
+	CSPRegionType      string `json:"csp_region_type,omitempty"`
+	AccountDisplayName string `json:"account_display_name,omitempty"`
+}
+
+// CreateCSPAccountResponse represent a create CSP account response.
 type CreateCSPAccountResponse GetCSPAccountResponse
 
+// ListCSPAccounts lists all CSP accounts.
+//
+// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#csp-get-list-accounts
 func (c *Client) ListCSPAccounts() (response ListCSPAccountsResponse, err error) {
 	req, err := c.newRequest(http.MethodGet, "csp_accounts", nil, nil)
 	if err != nil {
@@ -79,6 +89,9 @@ func (c *Client) ListCSPAccounts() (response ListCSPAccountsResponse, err error)
 	return response, nil
 }
 
+// GetCSPAccount returns details of the CSP account.
+//
+// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#csp-accounts
 func (c *Client) GetCSPAccount(ID string) (response GetCSPAccountResponse, err error) {
 	req, err := c.newRequest(http.MethodGet, "csp_accounts/"+ID, nil, nil)
 	if err != nil {
@@ -93,6 +106,9 @@ func (c *Client) GetCSPAccount(ID string) (response GetCSPAccountResponse, err e
 	return response, nil
 }
 
+// CreateCSPAccount creates a new CSP account.
+//
+// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#csp-create-account
 func (c *Client) CreateCSPAccount(account CreateCSPAccountAWSRequest) (response CreateCSPAccountResponse, err error) {
 	req, err := c.newRequest(http.MethodPost, "csp_accounts", nil, account)
 	if err != nil {
@@ -107,6 +123,9 @@ func (c *Client) CreateCSPAccount(account CreateCSPAccountAWSRequest) (response 
 	return response, nil
 }
 
+// UpdateCSPAccount updates CSP account.
+//
+// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#csp-update-account
 func (c *Client) UpdateCSPAccount(account CSPAccount) error {
 	aID := account.ID
 	account.ID = ""
@@ -124,6 +143,9 @@ func (c *Client) UpdateCSPAccount(account CSPAccount) error {
 	return nil
 }
 
+// DeleteCSPAccount deletes a CSP account.
+//
+// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#csp-delete-account
 func (c *Client) DeleteCSPAccount(ID string) error {
 	req, err := c.newRequest(http.MethodDelete, "csp_accounts/"+ID, nil, nil)
 	if err != nil {

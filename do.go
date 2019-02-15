@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// Do executes the request CPHalo API.
 func (c *Client) Do(req *http.Request, v interface{}) (*http.Response, error) {
 	return c.doTries(req, v, 0)
 }
