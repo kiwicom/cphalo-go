@@ -5,6 +5,9 @@ import (
 	"net/http"
 )
 
+// ServerGroup represent a CPHalo server group.
+//
+// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#object-representation-1
 type ServerGroup struct {
 	ID                    string         `json:"id,omitempty"`
 	URL                   string         `json:"url,omitempty"`
@@ -17,19 +20,29 @@ type ServerGroup struct {
 	AlertProfileIDs       []string       `json:"alert_profile_ids,omitempty"`
 }
 
+// ListServerGroupsResponse represent a CPHalo server group list response.
 type ListServerGroupsResponse struct {
 	Count  int           `json:"count"`
 	Groups []ServerGroup `json:"groups"`
 }
 
+// GetServerGroupResponse represent a CPHalo server group get response.
 type GetServerGroupResponse struct {
 	Group ServerGroup `json:"group"`
 }
 
+// CreateServerGroupResponse represent a CPHalo server group create response.
 type CreateServerGroupResponse = GetServerGroupResponse
+
+// CreateServerGroupRequest represent a CPHalo server group create request.
 type CreateServerGroupRequest = GetServerGroupResponse
+
+// UpdateServerGroupRequest represent a CPHalo server group create request.
 type UpdateServerGroupRequest = GetServerGroupResponse
 
+// ListServerGroups lists all server groups.
+//
+// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#list-server-groups
 func (c *Client) ListServerGroups() (response ListServerGroupsResponse, err error) {
 	req, err := c.newRequest(http.MethodGet, "groups", nil, nil)
 	if err != nil {
@@ -44,6 +57,9 @@ func (c *Client) ListServerGroups() (response ListServerGroupsResponse, err erro
 	return response, nil
 }
 
+// GetServerGroup return information describing a single group.
+//
+// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#get-a-single-server-group
 func (c *Client) GetServerGroup(ID string) (response GetServerGroupResponse, err error) {
 	req, err := c.newRequest(http.MethodGet, "groups/"+ID, nil, nil)
 	if err != nil {
@@ -58,6 +74,9 @@ func (c *Client) GetServerGroup(ID string) (response GetServerGroupResponse, err
 	return response, nil
 }
 
+// CreateServerGroup creates new server group.
+//
+// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#create-a-new-server-group
 func (c *Client) CreateServerGroup(group ServerGroup) (response CreateServerGroupResponse, err error) {
 	req, err := c.newRequest(http.MethodPost, "groups", nil, CreateServerGroupRequest{Group: group})
 	if err != nil {
@@ -72,6 +91,9 @@ func (c *Client) CreateServerGroup(group ServerGroup) (response CreateServerGrou
 	return response, nil
 }
 
+// UpdateServerGroup updates server group.
+//
+// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#update-server-group-attributes
 func (c *Client) UpdateServerGroup(group ServerGroup) error {
 	gID := group.ID
 	group.ID = ""
@@ -89,6 +111,9 @@ func (c *Client) UpdateServerGroup(group ServerGroup) error {
 	return nil
 }
 
+// DeleteServerGroup deletes server group.
+//
+// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#delete-server-group-without-any-servers
 func (c *Client) DeleteServerGroup(ID string) error {
 	req, err := c.newRequest(http.MethodDelete, "groups/"+ID, nil, nil)
 	if err != nil {
