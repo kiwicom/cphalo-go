@@ -1,4 +1,4 @@
-# CPHalo GoLang Library
+# CPHalo GoLang Package
 
 Go package for consuming CloudPassage Halo API.
 
@@ -8,7 +8,7 @@ Go package for consuming CloudPassage Halo API.
 [![coverage report](https://goreportcard.com/badge/gitlab.com/kiwicom/cphalo-go)](https://goreportcard.com/report/gitlab.com/kiwicom/cphalo-go)
 [![coverage report](https://godoc.org/gitlab.com/kiwicom/cphalo-go?status.svg)](https://godoc.org/gitlab.com/kiwicom/cphalo-go)
 
-[CPHalo API documentation](https://library.cloudpassage.com/help/cloudpassage-api-documentation)
+[CPHalo API documentation](https://library.cloudpassage.com/help/cloudpassage-api-documentation) (credentials needed)
 
 ## Usage
 
