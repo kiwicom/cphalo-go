@@ -24,7 +24,6 @@ linting:
 
 golint:
   stage: test
-  allow_failure: true
   script:
     - go get golang.org/x/lint/golint
     - golint -set_exit_status
