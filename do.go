@@ -36,14 +36,14 @@ func (c *Client) doTries(req *http.Request, v interface{}, tries int) (*http.Res
 	// https://library.cloudpassage.com/help/cloudpassage-api-documentation#token-management
 	// the docs say 402, but in reality only 401 is used
 	if resp.StatusCode == http.StatusPaymentRequired || resp.StatusCode == http.StatusUnauthorized {
-		if err := c.renewAccessToken(); err != nil {
+		if err = c.renewAccessToken(); err != nil {
 			return nil, fmt.Errorf("cannot renew access token: %v", err)
 		}
 
 		return c.doTries(req, v, tries+1)
 	}
 
-	if err := validateResponse(resp); err != nil {
+	if err = validateResponse(resp); err != nil {
 		return nil, err
 	}
 

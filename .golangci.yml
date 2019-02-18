@@ -1,0 +1,16 @@
+linters:
+  enable:
+    - goimports
+    - unconvert
+    - misspell
+    - golint
+    - govet
+    - gofmt
+  enable-all: false
+
+linters-settings:
+  govet:
+    check-shadowing: true
+
+issues:
+  max-same-issues: 0

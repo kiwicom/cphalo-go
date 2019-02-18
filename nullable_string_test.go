@@ -36,7 +36,7 @@ func TestNullableString_MarshalJSON(t *testing.T) {
 
 			got := string(b)
 			if got != tt.s {
-				t.Errorf("s %s; got %s", tt.s, string(got))
+				t.Errorf("s %s; got %s", tt.s, got)
 			}
 		})
 	}
