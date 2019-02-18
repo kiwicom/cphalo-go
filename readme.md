@@ -12,6 +12,12 @@ Go package for consuming CloudPassage Halo API.
 
 ## Usage
 
+**Install**
+
+```bash
+go get -u gitlab.com/kiwicom/cphalo-go
+```
+
 **Import package**
 
 ```golang
