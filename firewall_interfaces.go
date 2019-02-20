@@ -89,7 +89,7 @@ func (c *Client) CreateFirewallInterface(fwInterface FirewallInterface) (respons
 
 // UpdateFirewallInterface updates firewall interface.
 //
-// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#create-a-new-firewall-interface
+// CPHalo API Docs: https://library.cloudpassage.com/help/cloudpassage-api-documentation#firewall-interfaces
 func (c *Client) UpdateFirewallInterface(fwInterface FirewallInterface) error {
 	req, err := c.newRequest(http.MethodPut, "firewall_interfaces/"+fwInterface.ID, nil, UpdateFirewallInterfaceRequest{Interface: fwInterface})
 	if err != nil {

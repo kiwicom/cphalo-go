@@ -90,7 +90,7 @@ func (c *Client) CreateFirewallService(service FirewallService) (response Create
 
 // UpdateFirewallService updates firewall service.
 //
-// CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#create-a-new-firewall-service
+// CPHalo API Docs: https://library.cloudpassage.com/help/cloudpassage-api-documentation#firewall-services
 func (c *Client) UpdateFirewallService(service FirewallService) error {
 	req, err := c.newRequest(http.MethodPut, "firewall_services/"+service.ID, nil, UpdateFirewallServiceRequest{Service: service})
 	if err != nil {
