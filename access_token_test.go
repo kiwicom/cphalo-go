@@ -50,7 +50,7 @@ func TestClient_RenewAccessToken(t *testing.T) {
 			ts := httptest.NewServer(http.HandlerFunc(tt.handler))
 			defer ts.Close()
 
-			client := NewClient("", "")
+			client := NewClient("", "", nil)
 			client.baseURL, err = url.Parse(ts.URL)
 
 			if err != nil {

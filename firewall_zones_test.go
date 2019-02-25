@@ -23,7 +23,7 @@ func TestClient_ListFirewallZones(t *testing.T) {
 	)
 	defer ts.Close()
 
-	client := NewClient("", "")
+	client := NewClient("", "", nil)
 	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
@@ -64,7 +64,7 @@ func TestClient_GetFirewallZone(t *testing.T) {
 	)
 	defer ts.Close()
 
-	client := NewClient("", "")
+	client := NewClient("", "", nil)
 	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
@@ -97,7 +97,7 @@ func TestClient_CreateFirewallZone(t *testing.T) {
 	)
 	defer ts.Close()
 
-	client := NewClient("", "")
+	client := NewClient("", "", nil)
 	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
@@ -149,7 +149,7 @@ func TestClient_UpdateFirewallZone(t *testing.T) {
 	)
 	defer ts.Close()
 
-	client := NewClient("", "")
+	client := NewClient("", "", nil)
 	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
@@ -195,7 +195,7 @@ func TestClient_DeleteFirewallZone(t *testing.T) {
 	)
 	defer ts.Close()
 
-	client := NewClient("", "")
+	client := NewClient("", "", nil)
 	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {

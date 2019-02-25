@@ -23,7 +23,7 @@ func TestClient_ListFirewallPolicies(t *testing.T) {
 	)
 	defer ts.Close()
 
-	client := NewClient("", "")
+	client := NewClient("", "", nil)
 	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
@@ -64,7 +64,7 @@ func TestClient_GetFirewallPolicy(t *testing.T) {
 	)
 	defer ts.Close()
 
-	client := NewClient("", "")
+	client := NewClient("", "", nil)
 	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
@@ -97,7 +97,7 @@ func TestClient_CreateFirewallPolicy(t *testing.T) {
 	)
 	defer ts.Close()
 
-	client := NewClient("", "")
+	client := NewClient("", "", nil)
 	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
@@ -164,7 +164,7 @@ func TestClient_UpdateFirewallPolicy(t *testing.T) {
 	)
 	defer ts.Close()
 
-	client := NewClient("", "")
+	client := NewClient("", "", nil)
 	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
@@ -225,7 +225,7 @@ func TestClient_DeleteFirewallPolicy(t *testing.T) {
 	)
 	defer ts.Close()
 
-	client := NewClient("", "")
+	client := NewClient("", "", nil)
 	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {

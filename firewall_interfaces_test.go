@@ -23,7 +23,7 @@ func TestClient_ListFirewallInterfaces(t *testing.T) {
 	)
 	defer ts.Close()
 
-	client := NewClient("", "")
+	client := NewClient("", "", nil)
 	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
@@ -64,7 +64,7 @@ func TestClient_GetFirewallInterface(t *testing.T) {
 	)
 	defer ts.Close()
 
-	client := NewClient("", "")
+	client := NewClient("", "", nil)
 	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
@@ -97,7 +97,7 @@ func TestClient_CreateFirewallInterface(t *testing.T) {
 	)
 	defer ts.Close()
 
-	client := NewClient("", "")
+	client := NewClient("", "", nil)
 	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
@@ -144,7 +144,7 @@ func TestClient_UpdateFirewallInterface(t *testing.T) {
 	)
 	defer ts.Close()
 
-	client := NewClient("", "")
+	client := NewClient("", "", nil)
 	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
@@ -185,7 +185,7 @@ func TestClient_DeleteFirewallInterface(t *testing.T) {
 	)
 	defer ts.Close()
 
-	client := NewClient("", "")
+	client := NewClient("", "", nil)
 	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {

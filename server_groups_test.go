@@ -23,7 +23,7 @@ func TestClient_ListServerGroups(t *testing.T) {
 	)
 	defer ts.Close()
 
-	client := NewClient("", "")
+	client := NewClient("", "", nil)
 	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
@@ -64,7 +64,7 @@ func TestClient_GetServerGroup(t *testing.T) {
 	)
 	defer ts.Close()
 
-	client := NewClient("", "")
+	client := NewClient("", "", nil)
 	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
@@ -97,7 +97,7 @@ func TestClient_CreateServerGroup(t *testing.T) {
 	)
 	defer ts.Close()
 
-	client := NewClient("", "")
+	client := NewClient("", "", nil)
 	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
@@ -135,7 +135,7 @@ func TestClient_UpdateServerGroup(t *testing.T) {
 	)
 	defer ts.Close()
 
-	client := NewClient("", "")
+	client := NewClient("", "", nil)
 	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {
@@ -168,7 +168,7 @@ func TestClient_DeleteServerGroup(t *testing.T) {
 	)
 	defer ts.Close()
 
-	client := NewClient("", "")
+	client := NewClient("", "", nil)
 	client.baseURL, err = url.Parse(ts.URL)
 
 	if err != nil {

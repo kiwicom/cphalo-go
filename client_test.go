@@ -12,7 +12,7 @@ import (
 func TestNewClient(t *testing.T) {
 	appKey := "123"
 	appSecret := "321"
-	client := NewClient(appKey, appSecret)
+	client := NewClient(appKey, appSecret, nil)
 
 	if client == nil {
 		t.Fatal("new Client returned nil")

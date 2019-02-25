@@ -33,7 +33,7 @@ type Client struct {
 }
 
 // NewClient creates a new CPHalo Client
-func NewClient(appKey string, appSecret string) *Client {
+func NewClient(appKey string, appSecret string, client *http.Client) *Client {
 	baseURL, _ := url.Parse(DefaultBaseURL)
 	c := &Client{
 		appKey:       appKey,
@@ -42,7 +42,10 @@ func NewClient(appKey string, appSecret string) *Client {
 		timeout:      DefaultTimeout,
 		maxAuthTries: DefaultMaxAuthTries,
 	}
-	c.client = &http.Client{Timeout: c.timeout}
+	if client == nil {
+		client = &http.Client{Timeout: c.timeout}
+	}
+	c.client = client
 
 	return c
 }

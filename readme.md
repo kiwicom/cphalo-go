@@ -30,7 +30,7 @@ import "gitlab.com/kiwicom/cphalo-go"
 cpAppKey := "CP_APPLICATION_KEY"
 cpAppSecret := "CP_APPLICATION_SECRET"
 
-client := cphalo.NewClient(cpAppKey, cpAppSecret)
+client := cphalo.NewClient(cpAppKey, cpAppSecret, nil)
 ```
 
 
@@ -66,7 +66,7 @@ func main() {
 	cpAppKey := "CP_APPLICATION_KEY"
 	cpAppSecret := "CP_APPLICATION_SECRET"
 
-	client := cphalo.NewClient(cpAppKey, cpAppSecret)
+	client := cphalo.NewClient(cpAppKey, cpAppSecret, nil)
 
 	resp, err := client.ListServerGroups()
 
