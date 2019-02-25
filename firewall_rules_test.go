@@ -110,6 +110,9 @@ func TestClient_CreateFirewallRule(t *testing.T) {
 		Action:           "DROP",
 		Position:         1,
 		ConnectionStates: "NEW",
+		Log:              true,
+		LogPrefix:        "test_",
+		Comment:          "test",
 	}
 
 	resp, err := client.CreateFirewallRule("123", rule)
@@ -142,6 +145,18 @@ func TestClient_CreateFirewallRule(t *testing.T) {
 	if reqBody.Rule.ConnectionStates != rule.ConnectionStates {
 		t.Errorf("expected request to contain ConnectionStates=%s; got %s", rule.ConnectionStates, reqBody.Rule.ConnectionStates)
 	}
+
+	if reqBody.Rule.Log != rule.Log {
+		t.Errorf("expected request to contain Log=%t; got %t", rule.Log, reqBody.Rule.Log)
+	}
+
+	if reqBody.Rule.LogPrefix != rule.LogPrefix {
+		t.Errorf("expected request to contain LogPrefix=%s; got %s", rule.LogPrefix, reqBody.Rule.LogPrefix)
+	}
+
+	if reqBody.Rule.Comment != rule.Comment {
+		t.Errorf("expected request to contain Comment=%s; got %s", rule.Comment, reqBody.Rule.Comment)
+	}
 }
 
 func TestClient_UpdateFirewallRule(t *testing.T) {
@@ -172,6 +187,9 @@ func TestClient_UpdateFirewallRule(t *testing.T) {
 		Action:           "DROP",
 		Position:         1,
 		ConnectionStates: "NEW",
+		Log:              true,
+		LogPrefix:        "test_",
+		Comment:          "test",
 	}
 
 	err = client.UpdateFirewallRule("123", rule)
@@ -198,6 +216,18 @@ func TestClient_UpdateFirewallRule(t *testing.T) {
 
 	if reqBody.Rule.ConnectionStates != rule.ConnectionStates {
 		t.Errorf("expected response to contain ConnectionStates=%s; got %s", rule.ConnectionStates, reqBody.Rule.ConnectionStates)
+	}
+
+	if reqBody.Rule.Log != rule.Log {
+		t.Errorf("expected response to contain Log=%t; got %t", rule.Log, reqBody.Rule.Log)
+	}
+
+	if reqBody.Rule.LogPrefix != rule.LogPrefix {
+		t.Errorf("expected response to contain LogPrefix=%s; got %s", rule.LogPrefix, reqBody.Rule.LogPrefix)
+	}
+
+	if reqBody.Rule.Comment != rule.Comment {
+		t.Errorf("expected response to contain Comment=%s; got %s", rule.Comment, reqBody.Rule.Comment)
 	}
 }
 

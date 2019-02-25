@@ -37,6 +37,9 @@ type FirewallRule struct {
 	FirewallService   *FirewallService          `json:"firewall_service,omitempty"`
 	FirewallSource    *FirewallRuleSourceTarget `json:"firewall_source,omitempty"`
 	FirewallTarget    *FirewallRuleSourceTarget `json:"firewall_target,omitempty"`
+	Log               bool                      `json:"log,omitempty"`
+	LogPrefix         string                    `json:"log_prefix,omitempty"`
+	Comment           string                    `json:"comment,omitempty"`
 }
 
 // ListFirewallRulesResponse represent a list of firewall rules response.
