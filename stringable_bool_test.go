@@ -14,9 +14,9 @@ type stringableBoolTestItem struct {
 
 func getStringableBoolTestData() []stringableBoolTestItem {
 	return []stringableBoolTestItem{
-		{"true", StringableBool(true), "true", true},
-		{"false", StringableBool(false), "false", false},
-		{"invalid", StringableBool(false), "false", false},
+		{"true", StringableBool(true), `"true"`, true},
+		{"false", StringableBool(false), `"false"`, false},
+		{"invalid", StringableBool(false), `"false"`, false},
 	}
 }
 
