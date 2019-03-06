@@ -14,7 +14,7 @@ type FirewallPolicy struct {
 	Name                  string         `json:"name,omitempty"`
 	Platform              string         `json:"platform,omitempty"`
 	Description           string         `json:"description,omitempty"`
-	Shared                StringableBool `json:"shared"`
+	Shared                bool           `json:"shared,omitempty"`
 	FirewallRules         []FirewallRule `json:"firewall_rules,omitempty"`
 	IgnoreForwardingRules bool           `json:"ignore_forwarding_rules,omitempty"`
 }
