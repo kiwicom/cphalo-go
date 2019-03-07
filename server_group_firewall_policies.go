@@ -35,6 +35,8 @@ func (c *Client) GetServerGroupFirewallPolicy(ID string) (response GetServerGrou
 		return response, err
 	}
 
+	response.Group.GroupID = ID
+
 	return response, nil
 }
 
