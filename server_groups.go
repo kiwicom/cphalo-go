@@ -37,7 +37,7 @@ type CreateServerGroupResponse = GetServerGroupResponse
 // CreateServerGroupRequest represent a CPHalo server group create request.
 type CreateServerGroupRequest = GetServerGroupResponse
 
-// UpdateServerGroupRequest represent a CPHalo server group create request.
+// UpdateServerGroupRequest represent a CPHalo server group update request.
 type UpdateServerGroupRequest = GetServerGroupResponse
 
 // ListServerGroups lists all server groups.
