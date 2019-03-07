@@ -9,15 +9,14 @@ import (
 //
 // CPHalo API Docs: https://library.cloudpassage.com/help/article/link/cloudpassage-api-documentation#object-representation-1
 type ServerGroup struct {
-	ID                    string         `json:"id,omitempty"`
-	URL                   string         `json:"url,omitempty"`
-	Name                  string         `json:"name,omitempty"`
-	Description           string         `json:"description,omitempty"`
-	ParentID              string         `json:"parent_id,omitempty"`
-	HasChildren           bool           `json:"has_children,omitempty"`
-	Tag                   string         `json:"tag,omitempty"`
-	LinuxFirewallPolicyID NullableString `json:"linux_firewall_policy_id"`
-	AlertProfileIDs       []string       `json:"alert_profile_ids,omitempty"`
+	ID              string   `json:"id,omitempty"`
+	URL             string   `json:"url,omitempty"`
+	Name            string   `json:"name,omitempty"`
+	Description     string   `json:"description,omitempty"`
+	ParentID        string   `json:"parent_id,omitempty"`
+	HasChildren     bool     `json:"has_children,omitempty"`
+	Tag             string   `json:"tag,omitempty"`
+	AlertProfileIDs []string `json:"alert_profile_ids,omitempty"`
 }
 
 // ListServerGroupsResponse represent a CPHalo server group list response.
