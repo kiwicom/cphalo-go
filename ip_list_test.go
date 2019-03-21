@@ -2,7 +2,7 @@ package cphalo
 
 import (
 	"encoding/json"
-	"fmt"
+	"reflect"
 	"testing"
 )
 
@@ -49,7 +49,7 @@ func TestIPList_UnmarshalJSON(t *testing.T) {
 				t.Fatalf("unmarshalling failed: %v", err)
 			}
 
-			if fmt.Sprintf("%s", got) != fmt.Sprintf("%s", tt.ips) {
+			if !reflect.DeepEqual(got, tt.ips) {
 				t.Fatalf("expected %s; got %s", tt.ips, got)
 			}
 		})
