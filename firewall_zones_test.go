@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"reflect"
 	"testing"
 )
 
@@ -107,7 +108,7 @@ func TestClient_CreateFirewallZone(t *testing.T) {
 	service := FirewallZone{
 		ID:        "id",
 		Name:      "hello",
-		IPAddress: "0.0.0.0/0",
+		IPAddress: IPList{"0.0.0.0/0"},
 	}
 
 	resp, err := client.CreateFirewallZone(service)
@@ -129,7 +130,7 @@ func TestClient_CreateFirewallZone(t *testing.T) {
 		t.Errorf("expected request to contain Name=%s; got %s", service.Name, reqBody.Zone.Name)
 	}
 
-	if reqBody.Zone.IPAddress != service.IPAddress {
+	if !reflect.DeepEqual(reqBody.Zone.IPAddress, service.IPAddress) {
 		t.Errorf("expected request to contain IPAddress=%s; got %s", service.IPAddress, reqBody.Zone.IPAddress)
 	}
 }
@@ -159,7 +160,7 @@ func TestClient_UpdateFirewallZone(t *testing.T) {
 	service := FirewallZone{
 		ID:        "id",
 		Name:      "hello",
-		IPAddress: "0.0.0.0/0",
+		IPAddress: IPList{"0.0.0.0/0"},
 	}
 
 	err = client.UpdateFirewallZone(service)
@@ -176,7 +177,7 @@ func TestClient_UpdateFirewallZone(t *testing.T) {
 		t.Errorf("expected request to contain Name=%s; got %s", service.Name, reqBody.Zone.Name)
 	}
 
-	if reqBody.Zone.IPAddress != service.IPAddress {
+	if !reflect.DeepEqual(reqBody.Zone.IPAddress, service.IPAddress) {
 		t.Errorf("expected request to contain IPAddress=%s; got %s", service.IPAddress, reqBody.Zone.IPAddress)
 	}
 }

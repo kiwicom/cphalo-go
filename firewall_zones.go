@@ -12,7 +12,7 @@ type FirewallZone struct {
 	ID          string `json:"id,omitempty"`
 	URL         string `json:"url,omitempty"`
 	Name        string `json:"name,omitempty"`
-	IPAddress   string `json:"ip_address,omitempty"`
+	IPAddress   IPList `json:"ip_address,omitempty"`
 	Description string `json:"description,omitempty"`
 	System      bool   `json:"system,omitempty"`
 }
