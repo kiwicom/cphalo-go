@@ -14,6 +14,7 @@ type IPListTestItem struct {
 
 func TestIPList_MarshalJSON(t *testing.T) {
 	tests := []IPListTestItem{
+		{"empty", IPList{}, `""`},
 		{"single", IPList{"0.0.0.0/0"}, `"0.0.0.0/0"`},
 		{"double", IPList{"1.1.1.1", "2.2.2.2"}, `"1.1.1.1,2.2.2.2"`},
 	}
@@ -28,7 +29,7 @@ func TestIPList_MarshalJSON(t *testing.T) {
 
 			got := string(b)
 			if got != tt.strVal {
-				t.Errorf("s %s; got %s", tt.strVal, got)
+				t.Errorf("expected %s; got %s", tt.strVal, got)
 			}
 		})
 	}
@@ -36,6 +37,7 @@ func TestIPList_MarshalJSON(t *testing.T) {
 
 func TestIPList_UnmarshalJSON(t *testing.T) {
 	tests := []IPListTestItem{
+		{"empty", IPList{}, `""`},
 		{"single", IPList{"0.0.0.0/0"}, `"0.0.0.0/0"`},
 		{"double", IPList{"1.1.1.1", "2.2.2.2"}, `"1.1.1.1,2.2.2.2"`},
 		{"newlines", IPList{"1.1.1.1", "2.2.2.2"}, `"1.1.1.1,\r\n2.2.2.2"`},

@@ -22,10 +22,13 @@ func (i *IPList) UnmarshalJSON(in []byte) error {
 		`\n`, "",
 	)
 
-	var output []string
+	output := []string{}
 
 	for _, s := range strings.Split(replacer.Replace(string(in)), ",") {
-		output = append(output, strings.TrimSpace(s))
+		trimmed := strings.TrimSpace(s)
+		if len(trimmed) > 0 {
+			output = append(output, trimmed)
+		}
 	}
 
 	*i = output
